@@ -1,16 +1,27 @@
-import { Layout } from '@/components/custom/layout'
 import { Button } from '@/components/custom/button'
+import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
-import { UserNav } from '@/components/user-nav'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { UserNav } from '@/components/user-nav'
 import { useState } from 'react'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Interview() {
-    const [candidateName,setCandidateName] = useState("");
-    const [isInput,setIsInput] = useState(false);
+  const [candidateName, setCandidateName] = useState('')
+  const [isInput, setIsInput] = useState(false)
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -33,46 +44,42 @@ export default function Interview() {
             <Button className='bg-blue-600'>Save</Button>
           </div>
         </div>
-        <section className='border border-white rounded-md'>
-        <Accordion type="single" collapsible className='p-4'>
-            <AccordionItem value="item-1">
-                <AccordionTrigger>Front-End</AccordionTrigger>
-                <AccordionContent>
+        <section className='rounded-md border border-white'>
+          <Accordion type='single' collapsible className='p-4'>
+            <AccordionItem value='item-1'>
+              <AccordionTrigger>Front-End</AccordionTrigger>
+              <AccordionContent>
                 <Card>
-  <CardHeader>
-    <CardTitle>Question 1: What is javascript</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <Accordion type="single" collapsible>
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Hint: </AccordionTrigger>
-    <AccordionContent>
-      <p>is a script or programing language</p>
-      <p>implement complex feature on web page</p>
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
-
-  </CardContent>
-  <CardFooter>
-  <div className='mb-2 flex items-center justify-between w-full'>
-          <Input className='' placeholder='Candidate name'></Input>
-          <div className='flex items-center'>
-            <Button className='bg-red-600'>X</Button>
-            <Button className='bg-yellow-300'>O</Button>
-            <Button className='bg-green-600'>V</Button>
-          </div>
-        </div>
-  </CardFooter>
-</Card>
-
-                </AccordionContent>
+                  <CardHeader>
+                    <CardTitle>Question 1: What is javascript</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Accordion type='single' collapsible>
+                      <AccordionItem value='item-1'>
+                        <AccordionTrigger>Hint: </AccordionTrigger>
+                        <AccordionContent>
+                          <p>is a script or programing language</p>
+                          <p>implement complex feature on web page</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </CardContent>
+                  <CardFooter>
+                    <div className='mb-2 flex w-full items-center justify-between'>
+                      <Input className='' placeholder='Candidate name'></Input>
+                      <div className='flex items-center'>
+                        <Button className='bg-red-600'>X</Button>
+                        <Button className='bg-yellow-300'>O</Button>
+                        <Button className='bg-green-600'>V</Button>
+                      </div>
+                    </div>
+                  </CardFooter>
+                </Card>
+              </AccordionContent>
             </AccordionItem>
-        </Accordion>
+          </Accordion>
         </section>
       </Layout.Body>
     </Layout>
   )
 }
-
-
