@@ -2,26 +2,16 @@ import { Button } from '@/components/custom/button'
 import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { UserNav } from '@/components/user-nav'
-import { useState } from 'react'
+import { FormProvider } from 'react-hook-form'
+import Category from './components/category'
+import Note from './components/note'
+import { data } from './data/data'
+import useInterviewForm from './hooks/use-interview-form'
 
 export default function Interview() {
-  const [candidateName, setCandidateName] = useState('')
-  const [isInput, setIsInput] = useState(false)
+  const { control, method, register, setValue, onSubmit } = useInterviewForm()
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -35,50 +25,47 @@ export default function Interview() {
 
       {/* ===== Main ===== */}
       <Layout.Body>
-        <div className='mb-2 flex items-center justify-between'>
-          <Input className='' placeholder='Candidate name'></Input>
-          <div className='flex items-center'>
-            <Button>Note</Button>
-            <Button className='bg-red-600'>Fail</Button>
-            <Button className='bg-green-600'>Success</Button>
-            <Button className='bg-blue-600'>Save</Button>
-          </div>
-        </div>
-        <section className='rounded-md border border-white'>
-          <Accordion type='single' collapsible className='p-4'>
-            <AccordionItem value='item-1'>
-              <AccordionTrigger>Front-End</AccordionTrigger>
-              <AccordionContent>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Question 1: What is javascript</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Accordion type='single' collapsible>
-                      <AccordionItem value='item-1'>
-                        <AccordionTrigger>Hint: </AccordionTrigger>
-                        <AccordionContent>
-                          <p>is a script or programing language</p>
-                          <p>implement complex feature on web page</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </CardContent>
-                  <CardFooter>
-                    <div className='mb-2 flex w-full items-center justify-between'>
-                      <Input className='' placeholder='Candidate name'></Input>
-                      <div className='flex items-center'>
-                        <Button className='bg-red-600'>X</Button>
-                        <Button className='bg-yellow-300'>O</Button>
-                        <Button className='bg-green-600'>V</Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </section>
+        <FormProvider {...method}>
+          <form onSubmit={onSubmit}>
+            <div className='sticky mb-4 flex items-center justify-between'>
+              <Input
+                className='w-1/3'
+                placeholder='Candidate name'
+                {...register('candidateName')}
+              ></Input>
+              <div className='flex items-center gap-2'>
+                <Button type='button'>Question List</Button>
+                <Note />
+                <div className='flex flex-row overflow-hidden rounded-md'>
+                  <Button
+                    type='button'
+                    className='rounded-none bg-red-600'
+                    onClick={() => setValue('isPass', false)}
+                  >
+                    Fail
+                  </Button>
+                  <Button
+                    type='button'
+                    className='rounded-none bg-green-600'
+                    onClick={() => setValue('isPass', true)}
+                  >
+                    Success
+                  </Button>
+                </div>
+                <Button className='bg-blue-600'>Save</Button>
+              </div>
+            </div>
+            <div className='flex flex-col gap-4'>
+              {data.map((item, index) => (
+                <Category
+                  {...item}
+                  key={`category_${index}`}
+                  categoryIndex={index}
+                ></Category>
+              ))}
+            </div>
+          </form>
+        </FormProvider>
       </Layout.Body>
     </Layout>
   )
