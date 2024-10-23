@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import GeneralError from './pages/errors/general-error'
-import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
+import NotFoundError from './pages/errors/not-found-error'
 import UnauthorisedError from './pages/errors/unauthorised-error.tsx'
 
 const router = createBrowserRouter([
@@ -59,9 +59,9 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'tasks',
+        path: 'questions',
         lazy: async () => ({
-          Component: (await import('@/pages/tasks')).default,
+          Component: (await import('@/pages/questions')).default,
         }),
       },
       {

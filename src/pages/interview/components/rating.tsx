@@ -7,7 +7,11 @@ export default function Rating({ onClick }: Props) {
   return (
     <>
       {Array.from(Array(5), (_, index) => (
-        <Button type='button' onClick={() => onClick(index + 1)}>
+        <Button
+          key={`rating_${index}`}
+          type='button'
+          onClick={() => onClick(index + 1)}
+        >
           {index + 1}
         </Button>
       ))}

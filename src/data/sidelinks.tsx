@@ -13,6 +13,8 @@ import {
   IconHexagonNumber4,
   IconHexagonNumber5,
   IconLayoutDashboard,
+  IconLock,
+  IconMessage,
   IconMessages,
   IconRouteAltLeft,
   IconServerOff,
@@ -20,8 +22,6 @@ import {
   IconTruck,
   IconUserShield,
   IconUsers,
-  IconLock,
-  IconMessage,
 } from '@tabler/icons-react'
 
 export interface NavLink {
@@ -49,9 +49,9 @@ export const sidelinks: SideLink[] = [
     icon: <IconMessage size={18} />,
   },
   {
-    title: 'Tasks',
-    label: '3',
-    href: '/tasks',
+    title: 'Questions',
+    label: '',
+    href: '/questions',
     icon: <IconChecklist size={18} />,
   },
   {
