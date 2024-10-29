@@ -22,7 +22,7 @@ export default function QuestionList() {
       <DialogTrigger className='btn-like'>Question List</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Question List</DialogTitle>
+          <DialogTitle className='pb-4'>Question List</DialogTitle>
           <DialogDescription>
             <div className='rounded-md border'>
               <Table>
