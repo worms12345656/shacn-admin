@@ -6,14 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { questionList } from '../data/question-list'
 
 export default function QuestionList() {
@@ -26,11 +19,6 @@ export default function QuestionList() {
           <DialogDescription>
             <div className='rounded-md border'>
               <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                  </TableRow>
-                </TableHeader>
                 <TableBody>
                   {questionList.length ? (
                     questionList.map((question) => (

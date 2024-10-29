@@ -1,11 +1,11 @@
-import { Cross2Icon, PlusIcon } from '@radix-ui/react-icons'
+import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { categories, levels } from '../data/data'
+import { isPass } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 
 interface DataTableToolbarProps<TData> {
@@ -29,18 +29,11 @@ export function DataTableToolbar<TData>({
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('category') && (
+          {table.getColumn('isPass') && (
             <DataTableFacetedFilter
-              column={table.getColumn('category')}
-              title='Category'
-              options={categories}
-            />
-          )}
-          {table.getColumn('level') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('level')}
-              title='Level'
-              options={levels}
+              column={table.getColumn('isPass')}
+              title='isPass'
+              options={isPass}
             />
           )}
         </div>
@@ -56,13 +49,6 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className='flex flex-row gap-2'>
-        <Button
-          variant='outline'
-          size='sm'
-          className='ml-auto hidden h-8 lg:flex'
-        >
-          <PlusIcon className='mr-2 h-4 w-4'></PlusIcon> Add
-        </Button>
         <DataTableViewOptions table={table} />
       </div>
     </div>
