@@ -1,6 +1,6 @@
-import * as React from 'react'
 import { CheckIcon } from '@radix-ui/react-icons'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
+import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -39,4 +39,25 @@ const RadioGroupItem = React.forwardRef<
 })
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
 
-export { RadioGroup, RadioGroupItem }
+const RadioLabel = React.forwardRef<
+  HTMLInputElement,
+  Omit<React.ComponentPropsWithoutRef<'input'>, 'type'> & {
+    children: React.ReactNode
+  }
+>(({ className, children, ...props }, ref) => {
+  return (
+    <label className={cn('relative inline-block gap-2', className)}>
+      <input
+        ref={ref}
+        type='radio'
+        {...props}
+        className='peer absolute right-0 top-0 h-full w-full opacity-0'
+      ></input>
+      <span className='h-8 rounded-md bg-primary-foreground px-3 py-2 text-xs text-primary shadow peer-checked:bg-primary peer-checked:text-primary-foreground'>
+        {children}
+      </span>
+    </label>
+  )
+})
+
+export { RadioGroup, RadioGroupItem, RadioLabel }

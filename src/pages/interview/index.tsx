@@ -7,6 +7,7 @@ import { UserNav } from '@/components/user-nav'
 import { FormProvider } from 'react-hook-form'
 import Category from './components/category'
 import Note from './components/note'
+import QuestionList from './components/question-list'
 import { data } from './data/data'
 import useInterviewForm from './hooks/use-interview-form'
 
@@ -34,7 +35,7 @@ export default function Interview() {
                 {...register('candidateName')}
               ></Input>
               <div className='flex items-center gap-2'>
-                <Button type='button'>Question List</Button>
+                <QuestionList />
                 <Note />
                 <div className='flex flex-row overflow-hidden rounded-md'>
                   <Button

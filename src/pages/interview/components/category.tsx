@@ -39,7 +39,10 @@ export default function Category({
             <AccordionTrigger>{categoryName}</AccordionTrigger>
             <AccordionContent>
               {questionList.map((question, index) => (
-                <Card key={`question_${question.questionId}`}>
+                <Card
+                  key={`question_${question.questionId}`}
+                  className='mb-4 last-of-type:mb-0'
+                >
                   <CardHeader>
                     <CardTitle>{question.questionName}</CardTitle>
                   </CardHeader>
@@ -69,20 +72,15 @@ export default function Category({
                         value={question.questionId}
                       ></Input>
                       <Input
-                        className=''
+                        className='w-2/3'
                         placeholder='Summary'
                         {...register(
                           `category.${categoryIndex}.${index}.summary`
                         )}
                       ></Input>
-                      <div className='flex items-center'>
+                      <div>
                         <Rating
-                          onClick={(value) =>
-                            setValue(
-                              `category.${categoryIndex}.${index}.rating`,
-                              value
-                            )
-                          }
+                          name={`category.${categoryIndex}.${index}.rating`}
                         />
                       </div>
                     </div>

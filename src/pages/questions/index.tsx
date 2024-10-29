@@ -3,7 +3,7 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { tasks } from './data/question'
+import { questions } from './data/question'
 
 export default function Tasks() {
   return (
@@ -23,7 +23,7 @@ export default function Tasks() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={tasks} columns={columns} />
+          <DataTable data={questions} columns={columns} />
         </div>
       </Layout.Body>
     </Layout>
