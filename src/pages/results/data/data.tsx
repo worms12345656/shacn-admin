@@ -1,14 +1,14 @@
 import { CheckIcon, Cross1Icon } from '@radix-ui/react-icons'
 
-export const isPass = [
+export const results = [
   {
-    label: '',
-    value: 'true',
+    label: 'Pass',
+    value: 'pass',
     icon: CheckIcon,
   },
   {
-    label: '',
-    value: 'false',
+    label: 'Fail',
+    value: 'fail',
     icon: Cross1Icon,
   },
 ]

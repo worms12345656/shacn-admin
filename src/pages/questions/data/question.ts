@@ -1,63 +1,63 @@
 export const questions = [
   {
     id: 'QUEST-8782',
-    name: "You can't compress the program without quantifying the open-source SSD pixel!",
+    name: 'Call Stack in JS',
     category: 'frontEnd',
 
-    level: 'medium',
+    level: 'basic',
   },
   {
     id: 'QUEST-7878',
-    name: 'Try to calculate the EXE feed, maybe it will index the multi-byte pixel!',
+    name: 'Primitive types in JS',
     category: 'frontEnd',
 
-    level: 'medium',
+    level: 'basic',
   },
   {
     id: 'QUEST-7839',
-    name: 'We need to bypass the neural TCP card!',
+    name: 'value types and reference types',
     category: 'frontEnd',
 
-    level: 'advance',
+    level: 'basic',
   },
   {
     id: 'QUEST-5562',
-    name: 'The SAS interface is down, bypass the open-source pixel so we can back up the PNG bandwidth!',
+    name: 'implicicit, explicit, nominal, structuring, duck typing',
     category: 'frontEnd',
 
-    level: 'medium',
+    level: 'basic',
   },
   {
     id: 'QUEST-8686',
-    name: "I'll parse the wireless SSL protocol, that should driver the API panel!",
+    name: '== vs === vs type of',
     category: 'frontEnd',
 
-    level: 'medium',
+    level: 'basic',
   },
   {
     id: 'QUEST-1280',
-    name: 'Use the digital TLS panel, then you can transmit the haptic system!',
+    name: 'function scope, block scope and lexical scope',
     category: 'frontEnd',
 
-    level: 'advance',
+    level: 'basic',
   },
   {
     id: 'QUEST-7262',
-    name: 'The UTF8 application is down, parse the neural bandwidth so we can back up the PNG firewall!',
+    name: 'expression vs statement',
     category: 'frontEnd',
 
-    level: 'advance',
+    level: 'basic',
   },
   {
     id: 'QUEST-1138',
-    name: "Generating the driver won't do anything, we need to quantify the 1080p SMTP bandwidth!",
+    name: 'IIFE, Modules and Namespaces',
     category: 'frontEnd',
 
-    level: 'medium',
+    level: 'basic',
   },
   {
     id: 'QUEST-7184',
-    name: 'We need to program the back-end THX pixel!',
+    name: 'message queue and event loop',
     category: 'frontEnd',
 
     level: 'basic',

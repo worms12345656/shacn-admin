@@ -6,7 +6,7 @@ export const resultSchema = z.object({
   id: z.string(),
   name: z.string(),
   point: z.string(),
-  isPass: z.boolean(),
+  result: z.string(),
 })
 
 export type Result = z.infer<typeof resultSchema>

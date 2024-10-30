@@ -4,7 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
-import { CheckIcon, Cross1Icon } from '@radix-ui/react-icons'
+import { results } from '../data/data'
 import { Result } from '../data/schema'
 
 export const columns: ColumnDef<Result>[] = [
@@ -73,18 +73,24 @@ export const columns: ColumnDef<Result>[] = [
     },
   },
   {
-    accessorKey: 'isPass',
+    accessorKey: 'result',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Pass' />
+      <DataTableColumnHeader column={column} title='Result' />
     ),
     cell: ({ row }) => {
+      const result = results.find(
+        (result) => result.value === row.getValue('result')
+      )
+
+      if (!result) {
+        return undefined
+      }
       return (
         <div className='flex items-center'>
-          {row.getValue('isPass') ? (
-            <CheckIcon className='mr-2 h-4 w-4 text-muted-foreground' />
-          ) : (
-            <Cross1Icon className='mr-2 h-4 w-4 text-muted-foreground' />
+          {result.icon && (
+            <result.icon className='mr-2 h-4 w-4 text-muted-foreground' />
           )}
+          <span>{result.label}</span>
         </div>
       )
     },
