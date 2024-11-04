@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import * as React from 'react'
 
 import {
   Table,
@@ -23,8 +23,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { useNavigate } from 'react-router-dom'
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
+import { Question } from '../data/schema'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -42,6 +44,7 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const navigate = useNavigate()
 
   const table = useReactTable({
     data,
@@ -90,10 +93,15 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, index) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  onClick={() => {
+                    console.log(row.getVisibleCells()[index])
+
+                    navigate(`/questions/${(row.original as Question).id}`)
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
