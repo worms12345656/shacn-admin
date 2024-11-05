@@ -50,7 +50,7 @@ export default function Interview() {
                     className='rounded-none bg-green-600'
                     onClick={() => setValue('isPass', true)}
                   >
-                    Success
+                    Pass
                   </Button>
                 </div>
                 <Button className='bg-blue-600'>Save</Button>
