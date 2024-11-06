@@ -17,8 +17,14 @@ import useQuestionId from './hooks/use-question-id'
 
 export default function QuestionId() {
   const { id } = useParams()
-  const { isEdit, onClickEdit, onClickSave, register, setValue, onBackButton } =
-    useQuestionId()
+  const {
+    isEdit,
+    onClickEdit,
+    onClickSave,
+    register,
+    onBackButton,
+    getValues,
+  } = useQuestionId()
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -47,7 +53,7 @@ export default function QuestionId() {
                 {isEdit ? (
                   <Input {...register('name')}></Input>
                 ) : (
-                  <p>Call Stack in JS</p>
+                  <p>{getValues('name')}</p>
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
@@ -55,12 +61,16 @@ export default function QuestionId() {
                 {isEdit ? (
                   <Input {...register('category')}></Input>
                 ) : (
-                  <p>Front End</p>
+                  <p>{getValues('category')}</p>
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='w-[180px]'>Level</p>
-                {isEdit ? <Input {...register('level')}></Input> : <p>Basic</p>}
+                {isEdit ? (
+                  <Input {...register('level')}></Input>
+                ) : (
+                  <p>{getValues('level')}</p>
+                )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='w-[180px]'>Hint</p>
@@ -73,13 +83,7 @@ export default function QuestionId() {
                   ></Textarea>
                 ) : (
                   <div>
-                    <p>It's a single threaded. Mean it can only do 1 time</p>
-                    <p>Code execution is synchronous</p>
-                    <p>
-                      Function create stack frame that occupies a temporary
-                      memory
-                    </p>
-                    <p>It's work as LIFO - last in first out</p>
+                    <p className='whitespace-pre-wrap'>{getValues('hint')}</p>
                   </div>
                 )}
               </div>

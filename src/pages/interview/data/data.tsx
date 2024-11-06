@@ -5,18 +5,12 @@ export const data = [
       {
         questionId: '1',
         questionName: 'What is javascript',
-        hint: [
-          'is a script or porgaming language',
-          'help web page handle difficult logic',
-        ],
+        hint: 'is a script or porgaming language\nhelp web page handle difficult logic',
       },
       {
         questionId: '2',
         questionName: 'let vs const',
-        hint: [
-          'let can be updated while const cannot',
-          'both cannot re-declared',
-        ],
+        hint: 'let can be updated while const cannot\nboth cannot re-declared',
       },
     ],
   },
@@ -26,12 +20,12 @@ export const data = [
       {
         questionId: '3',
         questionName: 'Characteristic of OOP',
-        hint: ['Polymorphism', 'Abtraction', 'Encapsulation', 'Inheritance'],
+        hint: 'Polymorphism\nAbtraction\nEncapsulation\nInheritance',
       },
       {
         questionId: '4',
         questionName: 'What is Polymorphism In OOP',
-        hint: ['object can take multiple form'],
+        hint: 'object can take multiple form',
       },
     ],
   },
@@ -41,7 +35,7 @@ export const data = [
       {
         questionId: '5',
         questionName: 'What is MongoDB',
-        hint: ['opensource non-sql database', 'stored in JSON'],
+        hint: 'opensource non-sql database\nstored in JSON',
       },
     ],
   },

@@ -9,17 +9,12 @@ export const questionList = [
           {
             questionId: '3',
             questionName: 'Characteristic of OOP',
-            hint: [
-              'Polymorphism',
-              'Abtraction',
-              'Encapsulation',
-              'Inheritance',
-            ],
+            hint: "Polymorphism\nAbtraction\nEncapsulation\nInheritance'",
           },
           {
             questionId: '4',
             questionName: 'What is Polymorphism In OOP',
-            hint: ['object can take multiple form'],
+            hint: 'Object can take multiple form',
           },
         ],
       },

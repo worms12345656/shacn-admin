@@ -21,7 +21,7 @@ type Props = {
   questionList: {
     questionId: string
     questionName: string
-    hint: string[]
+    hint: string
   }[]
 }
 
@@ -30,7 +30,7 @@ export default function Category({
   questionList,
   categoryIndex,
 }: Props) {
-  const { register, setValue } = useFormContext()
+  const { register } = useFormContext()
   return (
     <>
       <div className='rounded-md border'>
@@ -51,11 +51,12 @@ export default function Category({
                       <AccordionItem value='item-1'>
                         <AccordionTrigger>Hint: </AccordionTrigger>
                         <AccordionContent>
-                          {question.hint.map((hint, index) => (
-                            <p key={`hint_${question.questionId}_${index}`}>
-                              {hint}
-                            </p>
-                          ))}
+                          <p
+                            key={`hint_${question.questionId}_${index}`}
+                            className='whitespace-pre-line'
+                          >
+                            {question.hint}
+                          </p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>

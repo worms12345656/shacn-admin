@@ -10,15 +10,10 @@ export default function useQuestionId() {
       name: 'Call Stack in JS',
       category: 'Front End',
       level: 'Basic',
-      hint: [
-        "It's a single threaded. Mean it can only do 1 time",
-        "it's a single thread",
-        ' Function create stack frame that occupies a temporary memory',
-        "It's work as LIFO - last in first out",
-      ],
+      hint: "It's a single threaded. Mean it can only do 1 time \nit's a single thread \nFunction create stack frame that occupies a temporary memory \nIt's work as LIFO - last in first out ",
     },
   })
-  const { control, register, setValue, handleSubmit } = method
+  const { control, register, setValue, handleSubmit, getValues } = method
 
   const onSubmit = handleSubmit((data) => {
     console.log('data', data)
@@ -51,5 +46,6 @@ export default function useQuestionId() {
     onClickEdit,
     onClickSave,
     onBackButton,
+    getValues,
   } as const
 }
