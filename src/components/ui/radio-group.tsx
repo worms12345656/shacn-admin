@@ -46,14 +46,19 @@ const RadioLabel = React.forwardRef<
   }
 >(({ className, children, ...props }, ref) => {
   return (
-    <label className={cn('relative inline-block gap-2', className)}>
+    <label className={'inline-blockgap-2 relative'}>
       <input
         ref={ref}
         type='radio'
         {...props}
         className='peer absolute right-0 top-0 h-full w-full opacity-0'
       ></input>
-      <span className='h-8 rounded-md bg-primary-foreground px-3 py-2 text-xs text-primary shadow peer-checked:bg-primary peer-checked:text-primary-foreground'>
+      <span
+        className={cn(
+          'h-8 rounded-md bg-primary-foreground px-3 py-2 text-xs text-primary shadow peer-checked:bg-primary peer-checked:text-primary-foreground',
+          className
+        )}
+      >
         {children}
       </span>
     </label>

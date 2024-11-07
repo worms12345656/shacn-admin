@@ -1,4 +1,3 @@
-import fs from 'fs'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { data } from '../data/data'
 import { Result } from '../data/schema'
@@ -25,9 +24,7 @@ export default function useInterviewForm() {
   })
 
   const onSubmit = handleSubmit((data) => {
-    fs.writeFile('../data/result.json', JSON.stringify(data), (err) => {
-      console.log('error', err)
-    })
+    console.log('data', data)
   })
 
   return {

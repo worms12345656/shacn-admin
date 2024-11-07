@@ -3,6 +3,7 @@ import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { Input } from '@/components/ui/input'
+import { RadioLabel } from '@/components/ui/radio-group'
 import { UserNav } from '@/components/user-nav'
 import { FormProvider } from 'react-hook-form'
 import Category from './components/category'
@@ -38,20 +39,18 @@ export default function Interview() {
                 <QuestionList />
                 <Note />
                 <div className='flex flex-row overflow-hidden rounded-md'>
-                  <Button
-                    type='button'
-                    className='rounded-none bg-red-600'
-                    onClick={() => setValue('isPass', false)}
+                  <RadioLabel
+                    className='btn-like h-9 rounded-none bg-red-600 peer-checked:bg-red-400'
+                    {...register('isPass')}
                   >
                     Fail
-                  </Button>
-                  <Button
-                    type='button'
-                    className='rounded-none bg-green-600'
-                    onClick={() => setValue('isPass', true)}
+                  </RadioLabel>
+                  <RadioLabel
+                    className='btn-like h-9 rounded-none bg-green-600 peer-checked:bg-green-400'
+                    {...register('isPass')}
                   >
                     Pass
-                  </Button>
+                  </RadioLabel>
                 </div>
                 <Button className='bg-blue-600'>Save</Button>
               </div>
