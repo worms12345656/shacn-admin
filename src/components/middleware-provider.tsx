@@ -1,16 +1,24 @@
 import { ReactNode, createContext, useContext, useState } from 'react'
 
+type User = {
+  name: string
+  jwt: string
+}
+
 type MiddlewareProviderProps = {
   children: ReactNode
 }
 
 type MiddlewareProviderState = {
-  auth: string
-  setAuth: (auth: string) => void
+  auth: User
+  setAuth: (auth: User) => void
 }
 
 const initalState: MiddlewareProviderState = {
-  auth: '',
+  auth: {
+    jwt: '',
+    name: '',
+  },
   setAuth: () => null,
 }
 
@@ -21,10 +29,10 @@ export function MiddlewareProvider({
   children,
   ...props
 }: MiddlewareProviderProps) {
-  const [auth, setAuth] = useState<string>('')
+  const [auth, setAuth] = useState<User>(initalState.auth)
   const value = {
     auth,
-    setAuth: (auth: string) => {
+    setAuth: (auth: User) => {
       setAuth(auth)
     },
   }
