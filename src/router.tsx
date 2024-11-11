@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { host } from './lib/utils.ts'
 import GeneralError from './pages/errors/general-error'
 import MaintenanceError from './pages/errors/maintenance-error'
 import NotFoundError from './pages/errors/not-found-error'
@@ -63,12 +64,20 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/questions')).default,
         }),
+        loader: async ({}) => {
+          const data = await fetch(host('/questions'))
+          return data
+        },
       },
       {
         path: 'questions/:id',
         lazy: async () => ({
           Component: (await import('@/pages/questions/id')).default,
         }),
+        loader: async ({ params }) => {
+          const data = await fetch(host(`/questions/${params.id}`))
+          return data
+        },
       },
       {
         path: 'results',

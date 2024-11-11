@@ -1,16 +1,19 @@
+import { HTTPResponse } from '@/lib/utils'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Question } from '../data/schema'
+
 export default function useQuestionId() {
+  const data = useLoaderData() as HTTPResponse<Question>
   const [isEdit, setIsEdit] = useState(false)
   const navigate = useNavigate()
   const method = useForm<Question>({
     defaultValues: {
-      name: 'Call Stack in JS',
-      category: 'Front End',
-      level: 'Basic',
-      hint: "It's a single threaded. Mean it can only do 1 time \nit's a single thread \nFunction create stack frame that occupies a temporary memory \nIt's work as LIFO - last in first out ",
+      name: data.data.name,
+      category: data.data.category,
+      level: data.data.level,
+      hint: data.data.hint,
     },
   })
   const { control, register, setValue, handleSubmit, getValues } = method
