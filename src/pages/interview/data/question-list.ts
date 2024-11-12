@@ -9,7 +9,7 @@ export const questionList = [
           {
             questionId: '3',
             questionName: 'Characteristic of OOP',
-            hint: "Polymorphism\nAbtraction\nEncapsulation\nInheritance'",
+            hint: 'Polymorphism\nAbtraction\nEncapsulation\nInheritance',
           },
           {
             questionId: '4',
@@ -24,10 +24,7 @@ export const questionList = [
           {
             questionId: '1',
             questionName: 'What is javascript',
-            hint: [
-              'is a script or porgaming language',
-              'help web page handle difficult logic',
-            ],
+            hint: 'is a script or porgaming language\nhelp web page handle difficult logic',
           },
           {
             questionId: '2',

@@ -5,7 +5,7 @@ import ThemeSwitch from '@/components/theme-switch'
 import { Input } from '@/components/ui/input'
 import { RadioLabel } from '@/components/ui/radio-group'
 import { UserNav } from '@/components/user-nav'
-import { FormProvider } from 'react-hook-form'
+import { Controller, FormProvider } from 'react-hook-form'
 import Category from './components/category'
 import Note from './components/note'
 import QuestionList from './components/question-list'
@@ -39,18 +39,32 @@ export default function Interview() {
                 <QuestionList />
                 <Note />
                 <div className='flex flex-row overflow-hidden rounded-md'>
-                  <RadioLabel
-                    className='btn-like h-9 rounded-none bg-red-600 peer-checked:bg-red-400'
-                    {...register('isPass')}
-                  >
-                    Fail
-                  </RadioLabel>
-                  <RadioLabel
-                    className='btn-like h-9 rounded-none bg-green-600 peer-checked:bg-green-400'
-                    {...register('isPass')}
-                  >
-                    Pass
-                  </RadioLabel>
+                  <Controller
+                    control={control}
+                    name='isPass'
+                    render={({ field }) => (
+                      <>
+                        <RadioLabel
+                          className='btn-like h-9 rounded-none bg-red-600 peer-checked:bg-red-400'
+                          onChange={() => {
+                            field.onChange(false)
+                          }}
+                          checked={!field.value}
+                        >
+                          Fail
+                        </RadioLabel>
+                        <RadioLabel
+                          className='btn-like h-9 rounded-none bg-green-600 peer-checked:bg-green-400'
+                          onChange={() => {
+                            field.onChange(true)
+                          }}
+                          checked={field.value}
+                        >
+                          Pass
+                        </RadioLabel>
+                      </>
+                    )}
+                  ></Controller>
                 </div>
                 <Button className='bg-blue-600'>Save</Button>
               </div>

@@ -1,3 +1,5 @@
+import { toast } from '@/components/ui/use-toast'
+import { host } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { data } from '../data/data'
@@ -19,14 +21,33 @@ export default function useInterviewForm() {
       ),
     },
   })
-  const { control, register, setValue, handleSubmit } = method
+
+  const {
+    control,
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = method
+  console.log('err', errors)
+
   const {} = useFieldArray({
     control,
     name: 'category',
   })
 
-  const onSubmit = handleSubmit((data) => {
-    console.log('data', data)
+  const onSubmit = handleSubmit(async (data) => {
+    const result = await fetch(host('/result/save'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    if (result.status === 200) {
+      toast({
+        title: '',
+        description: 'Save Result Successfully!',
+      })
+    }
   })
 
   return {
