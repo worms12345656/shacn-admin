@@ -29,7 +29,7 @@ export default function Interview() {
       <Layout.Body>
         <FormProvider {...method}>
           <form onSubmit={onSubmit}>
-            <div className='sticky mb-4 flex items-center justify-between'>
+            <div className='sticky top-0 z-10 mb-4 flex items-center justify-between bg-background pt-4'>
               <Input
                 className='w-1/3'
                 placeholder='Candidate name'

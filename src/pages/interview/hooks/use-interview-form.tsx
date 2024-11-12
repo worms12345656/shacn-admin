@@ -1,9 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { data } from '../data/data'
-import { Result } from '../data/schema'
+import { Result, resultSchema } from '../data/schema'
 
 export default function useInterviewForm() {
   const method = useForm<Result>({
+    resolver: zodResolver(resultSchema),
     defaultValues: {
       candidateName: '',
       isPass: false,

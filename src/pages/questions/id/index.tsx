@@ -49,7 +49,7 @@ export default function QuestionId() {
             </CardHeader>
             <CardContent>
               <div className='flex w-full  flex-row items-center justify-between border-b pb-6'>
-                <p className='w-[180px]'>Name</p>
+                <p className='min-w-[180px]'>Name</p>
                 {isEdit ? (
                   <Input {...register('name')}></Input>
                 ) : (
@@ -57,7 +57,7 @@ export default function QuestionId() {
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
-                <p className='w-[180px]'>Category</p>
+                <p className='min-w-[180px]'>Category</p>
                 {isEdit ? (
                   <Input {...register('category')}></Input>
                 ) : (
@@ -65,7 +65,7 @@ export default function QuestionId() {
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
-                <p className='w-[180px]'>Level</p>
+                <p className='min-w-[180px]'>Level</p>
                 {isEdit ? (
                   <Input {...register('level')}></Input>
                 ) : (
@@ -73,7 +73,7 @@ export default function QuestionId() {
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
-                <p className='w-[180px]'>Hint</p>
+                <p className='min-w-[180px]'>Hint</p>
                 {isEdit ? (
                   <Textarea
                     {...register('hint')}
