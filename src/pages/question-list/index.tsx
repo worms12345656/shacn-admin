@@ -3,9 +3,9 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { results } from './data/question'
+import { questionList } from './data/question'
 
-export default function Results() {
+export default function QuestionList() {
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -19,11 +19,11 @@ export default function Results() {
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Results</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>Question List</h2>
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={results} columns={columns} />
+          <DataTable data={questionList} columns={columns} />
         </div>
       </Layout.Body>
     </Layout>

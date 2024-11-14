@@ -16,6 +16,7 @@ import {
   IconLock,
   IconMessage,
   IconMessages,
+  IconNotes,
   IconReportSearch,
   IconRouteAltLeft,
   IconServerOff,
@@ -60,6 +61,12 @@ export const sidelinks: SideLink[] = [
     label: '',
     href: '/results',
     icon: <IconReportSearch size={18} />,
+  },
+  {
+    title: 'Question List',
+    label: '',
+    href: '/question-list',
+    icon: <IconNotes size={18} />,
   },
   {
     title: 'Chats',
