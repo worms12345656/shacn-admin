@@ -10,7 +10,6 @@ export const questionList = [
     id: 'QUEST-7878',
     name: 'Primitive types in JS',
     questionNumber: 10,
-
     level: 'basic',
   },
   {

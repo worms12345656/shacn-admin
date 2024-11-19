@@ -26,7 +26,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
-import { Question } from '../data/schema'
+import { QuestionList } from '../data/schema'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -100,7 +100,9 @@ export function DataTable<TData, TValue>({
                   onClick={() => {
                     console.log(row.getVisibleCells()[index])
 
-                    navigate(`/questions/${(row.original as Question).id}`)
+                    navigate(
+                      `/question-list/${(row.original as QuestionList).id}`
+                    )
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (
