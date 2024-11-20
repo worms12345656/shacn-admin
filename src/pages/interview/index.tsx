@@ -9,11 +9,17 @@ import { Controller, FormProvider } from 'react-hook-form'
 import Category from './components/category'
 import Note from './components/note'
 import QuestionList from './components/question-list'
-import { data } from './data/data'
 import useInterviewForm from './hooks/use-interview-form'
 
 export default function Interview() {
-  const { control, method, register, setValue, onSubmit } = useInterviewForm()
+  const {
+    control,
+    method,
+    categoryList,
+    register,
+    onSelectQuestionList,
+    onSubmit,
+  } = useInterviewForm()
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -36,7 +42,7 @@ export default function Interview() {
                 {...register('candidateName')}
               ></Input>
               <div className='flex items-center gap-2'>
-                <QuestionList />
+                <QuestionList onSelectQuestionList={onSelectQuestionList} />
                 <Note />
                 <div className='flex flex-row overflow-hidden rounded-md'>
                   <Controller
@@ -70,7 +76,7 @@ export default function Interview() {
               </div>
             </div>
             <div className='flex flex-col gap-4'>
-              {data.map((item, index) => (
+              {categoryList.map((item, index) => (
                 <Category
                   {...item}
                   key={`category_${index}`}

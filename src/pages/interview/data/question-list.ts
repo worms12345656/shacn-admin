@@ -16,6 +16,16 @@ export const questionList = [
             questionName: 'What is Polymorphism In OOP',
             hint: 'Object can take multiple form',
           },
+          {
+            questionId: '5',
+            questionName: 'What is Polymorphism In OOP',
+            hint: 'Object can take multiple form',
+          },
+          {
+            questionId: '6',
+            questionName: 'What is Polymorphism In OOP',
+            hint: 'Object can take multiple form',
+          },
         ],
       },
       {
@@ -29,10 +39,7 @@ export const questionList = [
           {
             questionId: '2',
             questionName: 'let vs const',
-            hint: [
-              'let can be updated while const cannot',
-              'both cannot re-declared',
-            ],
+            hint: 'let can be updated while const cannot\nboth cannot re-declared',
           },
         ],
       },

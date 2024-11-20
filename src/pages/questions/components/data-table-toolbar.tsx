@@ -5,6 +5,7 @@ import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 import { DataTableViewOptions } from '../components/data-table-view-options'
 
+import { useNavigate } from 'react-router-dom'
 import { categories, levels } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 
@@ -16,6 +17,7 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
+  const navigate = useNavigate()
 
   return (
     <div className='flex items-center justify-between'>
@@ -60,6 +62,8 @@ export function DataTableToolbar<TData>({
           variant='outline'
           size='sm'
           className='ml-auto hidden h-8 lg:flex'
+          type='button'
+          onClick={() => navigate('/questions/add')}
         >
           <PlusIcon className='mr-2 h-4 w-4'></PlusIcon> Add
         </Button>

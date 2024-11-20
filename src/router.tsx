@@ -81,6 +81,12 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: 'questions/add',
+        lazy: async () => ({
+          Component: (await import('@/pages/questions/add')).default,
+        }),
+      },
+      {
         path: 'results',
         lazy: async () => ({
           Component: (await import('@/pages/results')).default,

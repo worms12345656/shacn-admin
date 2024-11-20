@@ -9,7 +9,11 @@ import {
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { questionList } from '../data/question-list'
 
-export default function QuestionList() {
+type Props = {
+  onSelectQuestionList: (id: string) => void
+}
+
+export default function QuestionList({ onSelectQuestionList }: Props) {
   return (
     <Dialog>
       <DialogTrigger className='btn-like'>Question List</DialogTrigger>
@@ -21,9 +25,12 @@ export default function QuestionList() {
               <Table>
                 <TableBody>
                   {questionList.length ? (
-                    questionList.map((question) => (
-                      <TableRow key={question.id}>
-                        <TableCell>{question.name}</TableCell>
+                    questionList.map((list) => (
+                      <TableRow
+                        onClick={() => onSelectQuestionList(list.id)}
+                        key={list.id}
+                      >
+                        <TableCell>{list.name}</TableCell>
                       </TableRow>
                     ))
                   ) : (
