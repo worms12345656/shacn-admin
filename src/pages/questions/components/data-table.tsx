@@ -98,8 +98,6 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                   onClick={() => {
-                    console.log(row.getVisibleCells()[index])
-
                     navigate(`/questions/${(row.original as Question).id}`)
                   }}
                 >

@@ -10,9 +10,17 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { UserNav } from '@/components/user-nav'
 import { useParams } from 'react-router-dom'
+import { categories, levels } from './data/label'
 import useQuestionId from './hooks/use-question-id'
 
 export default function QuestionId() {
@@ -24,6 +32,7 @@ export default function QuestionId() {
     register,
     onBackButton,
     getValues,
+    setValue,
   } = useQuestionId()
   return (
     <Layout>
@@ -61,26 +70,44 @@ export default function QuestionId() {
                 {isEdit ? (
                   <Input {...register('category')}></Input>
                 ) : (
-                  <p>{getValues('category')}</p>
+                  <p>
+                    {
+                      categories.find(
+                        (item) => item.value === getValues('category')
+                      )?.label
+                    }
+                  </p>
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Level</p>
                 {isEdit ? (
-                  <Input {...register('level')}></Input>
+                  <Select
+                    defaultValue={getValues('level')}
+                    onValueChange={(value) => setValue('level', value)}
+                  >
+                    <SelectTrigger className='w-[180px]'>
+                      <SelectValue placeholder='Theme' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='basic'>Basic</SelectItem>
+                      <SelectItem value='medium'>Medium</SelectItem>
+                      <SelectItem value='advance'>Advance</SelectItem>
+                    </SelectContent>
+                  </Select>
                 ) : (
-                  <p>{getValues('level')}</p>
+                  <p>
+                    {
+                      levels.find((item) => item.value === getValues('level'))
+                        ?.label
+                    }
+                  </p>
                 )}
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Hint</p>
                 {isEdit ? (
-                  <Textarea
-                    {...register('hint')}
-                    // onChange={(e) =>
-                    //   setValue('hint', e.target.value.split('\n'))
-                    // }
-                  ></Textarea>
+                  <Textarea {...register('hint')}></Textarea>
                 ) : (
                   <div>
                     <p className='whitespace-pre-wrap'>{getValues('hint')}</p>
