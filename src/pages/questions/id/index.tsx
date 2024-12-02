@@ -19,13 +19,12 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { UserNav } from '@/components/user-nav'
-import { useParams } from 'react-router-dom'
 import { categories, levels } from './data/label'
 import useQuestionId from './hooks/use-question-id'
 
 export default function QuestionId() {
-  const { id } = useParams()
   const {
+    questionId,
     isEdit,
     onClickEdit,
     onClickSave,
@@ -33,6 +32,7 @@ export default function QuestionId() {
     onBackButton,
     getValues,
     setValue,
+    onDeleteButton,
   } = useQuestionId()
   return (
     <Layout>
@@ -53,7 +53,7 @@ export default function QuestionId() {
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
           <Card className='p-4'>
             <CardHeader>
-              <CardTitle>{id}</CardTitle>
+              <CardTitle>{questionId}</CardTitle>
               <CardDescription></CardDescription>
             </CardHeader>
             <CardContent>
@@ -68,7 +68,19 @@ export default function QuestionId() {
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Category</p>
                 {isEdit ? (
-                  <Input {...register('category')}></Input>
+                  <Select
+                    defaultValue={getValues('category')}
+                    onValueChange={(value) => setValue('category', value)}
+                  >
+                    <SelectTrigger className='w-full'>
+                      <SelectValue placeholder='Theme' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((item) => (
+                        <SelectItem value={item.value}>{item.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 ) : (
                   <p>
                     {
@@ -86,13 +98,13 @@ export default function QuestionId() {
                     defaultValue={getValues('level')}
                     onValueChange={(value) => setValue('level', value)}
                   >
-                    <SelectTrigger className='w-[180px]'>
+                    <SelectTrigger className='w-full'>
                       <SelectValue placeholder='Theme' />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value='basic'>Basic</SelectItem>
-                      <SelectItem value='medium'>Medium</SelectItem>
-                      <SelectItem value='advance'>Advance</SelectItem>
+                      {levels.map((item) => (
+                        <SelectItem value={item.value}>{item.label}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 ) : (
@@ -122,7 +134,7 @@ export default function QuestionId() {
                 ) : (
                   <Button onClick={onClickEdit}>Edit</Button>
                 )}
-                <Button>Delete</Button>
+                <Button onClick={onDeleteButton}>Delete</Button>
                 <Button onClick={onBackButton}>Back</Button>
               </div>
             </CardFooter>

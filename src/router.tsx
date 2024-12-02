@@ -91,6 +91,20 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/results')).default,
         }),
+        loader: async () => {
+          const data = await fetch(host(`/results`))
+          return data
+        },
+      },
+      {
+        path: 'results/:id',
+        lazy: async () => ({
+          Component: (await import('@/pages/results/id')).default,
+        }),
+        // loader: async () => {
+        //   const data = await fetch(host(`/results`))
+        //   return data
+        // },
       },
       {
         path: 'question-list',

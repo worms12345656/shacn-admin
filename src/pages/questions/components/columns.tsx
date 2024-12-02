@@ -51,7 +51,7 @@ export const columns: ColumnDef<Question>[] = [
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+          <span className='max-w-32 cursor-pointer truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
             {row.getValue('name')}
           </span>
         </div>

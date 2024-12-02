@@ -37,12 +37,14 @@ export const columns: ColumnDef<Result>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Id' />
     ),
-    cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
+    cell: ({ row }) => (
+      <div className='w-[80px] truncate'>{row.getValue('id')}</div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'candidateName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Candidate Name' />
     ),
@@ -50,7 +52,7 @@ export const columns: ColumnDef<Result>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('name')}
+            {row.getValue('candidateName')}
           </span>
         </div>
       )

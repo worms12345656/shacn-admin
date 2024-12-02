@@ -53,7 +53,7 @@ export default function useInterviewForm() {
   const onSubmit = handleSubmit(async (data) => {
     // console.log('data', data)
 
-    const result = await fetch(host('/results/save'), {
+    const result = await fetch(host('/result/save'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
