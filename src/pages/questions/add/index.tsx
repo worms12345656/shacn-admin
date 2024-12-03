@@ -10,19 +10,21 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { UserNav } from '@/components/user-nav'
+import { categories, levels } from './data/label'
 import useQuestionId from './hooks/use-question-id'
 
 export default function QuestionAdd() {
-  const {
-    isEdit,
-    onClickEdit,
-    onClickSave,
-    register,
-    onBackButton,
-    getValues,
-  } = useQuestionId()
+  const { onSubmit, register, onBackButton, getValues, setValue } =
+    useQuestionId()
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -39,7 +41,10 @@ export default function QuestionAdd() {
             <h2 className='text-2xl font-bold tracking-tight'>Questions</h2>
           </div>
         </div>
-        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+        <form
+          className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'
+          onSubmit={onSubmit}
+        >
           <Card className='p-4'>
             <CardHeader>
               <CardTitle>Add</CardTitle>
@@ -48,57 +53,55 @@ export default function QuestionAdd() {
             <CardContent>
               <div className='flex w-full  flex-row items-center justify-between border-b pb-6'>
                 <p className='min-w-[180px]'>Name</p>
-                {isEdit ? (
-                  <Input {...register('name')}></Input>
-                ) : (
-                  <p>{getValues('name')}</p>
-                )}
+                <Input {...register('name')}></Input>
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Category</p>
-                {isEdit ? (
-                  <Input {...register('category')}></Input>
-                ) : (
-                  <p>{getValues('category')}</p>
-                )}
+                <Select
+                  defaultValue={getValues('category')}
+                  onValueChange={(value) => setValue('category', value)}
+                >
+                  <SelectTrigger className='w-full'>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((item) => (
+                      <SelectItem value={item.value}>{item.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Level</p>
-                {isEdit ? (
-                  <Input {...register('level')}></Input>
-                ) : (
-                  <p>{getValues('level')}</p>
-                )}
+                <Select
+                  defaultValue={getValues('level')}
+                  onValueChange={(value) => setValue('level', value)}
+                >
+                  <SelectTrigger className='w-full'>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {levels.map((item) => (
+                      <SelectItem value={item.value}>{item.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Hint</p>
-                {isEdit ? (
-                  <Textarea
-                    {...register('hint')}
-                    // onChange={(e) =>
-                    //   setValue('hint', e.target.value.split('\n'))
-                    // }
-                  ></Textarea>
-                ) : (
-                  <div>
-                    <p className='whitespace-pre-wrap'>{getValues('hint')}</p>
-                  </div>
-                )}
+                <Textarea {...register('hint')}></Textarea>
               </div>
             </CardContent>
             <CardFooter>
               <div className='flex w-full justify-end gap-4'>
-                {isEdit ? (
-                  <Button onClick={onClickSave}>Save</Button>
-                ) : (
-                  <Button onClick={onClickEdit}>Edit</Button>
-                )}
-                <Button>Delete</Button>
-                <Button onClick={onBackButton}>Back</Button>
+                <Button>Save</Button>
+                <Button type='button' onClick={onBackButton}>
+                  Back
+                </Button>
               </div>
             </CardFooter>
           </Card>
-        </div>
+        </form>
       </Layout.Body>
     </Layout>
   )

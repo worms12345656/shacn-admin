@@ -1,51 +1,48 @@
-import { useState } from 'react'
+import { toast } from '@/components/ui/use-toast'
+import { saveQuestions } from '@/services/question'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { Question } from '../data/schema'
 
 export default function useQuestionId() {
-  const [isEdit, setIsEdit] = useState(false)
   const navigate = useNavigate()
   const method = useForm<Question>({
     defaultValues: {
       name: '',
-      category: '',
-      level: '',
+      category: 'frontEnd',
+      level: 'basic',
       hint: '',
     },
   })
   const { control, register, setValue, handleSubmit, getValues } = method
 
-  const onSubmit = handleSubmit((data) => {
-    console.log('data', data)
+  const onSubmit = handleSubmit(async (input) => {
+    const { data, status } = await saveQuestions({ input })
 
-    // fs.writeFile('../data/result.json', JSON.stringify(data), (err) => {
-    //   console.log('error', err)
-    // })
+    if (status === 201) {
+      navigate(`/questions/${data.data._id}`)
+      toast({
+        title: '',
+        description: 'Save Result Successfully!',
+      })
+    } else {
+      toast({
+        title: '',
+        description: "Something's wrong",
+      })
+    }
   })
-
-  const onClickEdit = () => {
-    setIsEdit(true)
-  }
-
-  const onClickSave = () => {
-    setIsEdit(false)
-    onSubmit()
-  }
 
   const onBackButton = () => {
     navigate('/questions')
   }
 
   return {
-    isEdit,
     method,
     control,
     register,
     setValue,
     onSubmit,
-    onClickEdit,
-    onClickSave,
     onBackButton,
     getValues,
   } as const
