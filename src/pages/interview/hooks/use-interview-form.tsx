@@ -1,10 +1,10 @@
 import { toast } from '@/components/ui/use-toast'
-import { host } from '@/lib/utils'
+import { HTTPResponse, host } from '@/lib/utils'
+import { QuestionList } from '@/services/question-list/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { data } from '../data/data'
-import { questionList } from '../data/question-list'
+import { useLoaderData } from 'react-router-dom'
 import { Result, resultSchema } from '../data/schema'
 
 type Category = {
@@ -17,7 +17,8 @@ type Category = {
 }
 
 export default function useInterviewForm() {
-  const [categoryList, setCategoryList] = useState<Category[]>(data)
+  const { data } = useLoaderData() as HTTPResponse<QuestionList>
+  const [categoryList, setCategoryList] = useState<Category[]>(data.list)
   const defaultValues = {
     candidateName: '',
     isPass: false,
