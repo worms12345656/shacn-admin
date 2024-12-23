@@ -17,13 +17,7 @@ export default function Questions() {
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>
-              OSOL 100 AI LIST
-            </h2>
-            <h2 className='text-2xl font-bold tracking-tight'>
-              Make with ❤️ OBOT & OSOL100 by Oxyz
-            </h2>
-            <h2 className='text-2xl font-bold tracking-tight'>
-              Cryptocurrency Prices
+              Crypto Currency
             </h2>
           </div>
         </div>

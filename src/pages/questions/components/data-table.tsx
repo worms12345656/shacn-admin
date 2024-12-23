@@ -33,7 +33,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { formatToMillionUSD } from '@/lib/utils'
 import { Dialog } from '@radix-ui/react-dialog'
 import { useEffect, useRef, useState } from 'react'
 import { DataTablePagination } from '../components/data-table-pagination'
@@ -127,9 +126,36 @@ export function DataTable<TData, TValue>({
   ]
   const dataChart = chart && [
     [chart[0][1], '#0000ff'],
-    [chart[10][1], '#8d0073'],
-    [chart[20][1], '#ba0046'],
-    [chart[30][1], '#d60028'],
+    [chart[1][1], '#0000ff'],
+    [chart[2][1], '#0000ff'],
+    [chart[3][1], '#0000ff'],
+    [chart[4][1], '#0000ff'],
+    [chart[5][1], '#0000ff'],
+    [chart[6][1], '#0000ff'],
+    [chart[7][1], '#0000ff'],
+    [chart[8][1], '#0000ff'],
+    [chart[9][1], '#0000ff'],
+    [chart[10][1], '#0000ff'],
+    [chart[11][1], '#0000ff'],
+    [chart[12][1], '#0000ff'],
+    [chart[13][1], '#0000ff'],
+    [chart[14][1], '#0000ff'],
+    [chart[15][1], '#0000ff'],
+    [chart[16][1], '#0000ff'],
+    [chart[17][1], '#0000ff'],
+    [chart[18][1], '#0000ff'],
+    [chart[19][1], '#0000ff'],
+    [chart[20][1], '#0000ff'],
+    [chart[21][1], '#0000ff'],
+    [chart[22][1], '#0000ff'],
+    [chart[23][1], '#0000ff'],
+    [chart[24][1], '#0000ff'],
+    [chart[25][1], '#0000ff'],
+    [chart[26][1], '#0000ff'],
+    [chart[27][1], '#0000ff'],
+    [chart[28][1], '#0000ff'],
+    [chart[29][1], '#0000ff'],
+    [chart[30][1], '#0000ff'],
   ]
 
   return (
@@ -194,85 +220,70 @@ export function DataTable<TData, TValue>({
         <DialogTrigger ref={ref}></DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{row?.getValue('name')}</DialogTitle>
-            <DialogDescription>
-              <div className='flex flex-row justify-between '>
-                <div className=' p-4'>
-                  <div>$ Price</div>
-                  <div className='bold text-xl'>
-                    {formatToMillionUSD(row?.getValue('current_price'))}
-                  </div>
-                  <div></div>
-                </div>
-                <div className=' p-4'>
-                  <div>$ Price</div>
-                  <div className='bold text-xl'>
-                    {formatToMillionUSD(row?.getValue('market_cap'))}
-                  </div>
-                </div>
-                <div className=' p-4'>
-                  <div>High on 24h</div>
-                  <div className='bold text-xl'>
-                    {row?.getValue('high_24h')}
-                  </div>
-                </div>
-                <div className=' p-4'>
-                  <div>Low on 24h</div>
-                  <div className='bold text-xl'>{row?.getValue('low_24h')}</div>
-                </div>
+            <DialogTitle>
+              <div className='flex flex-row items-center gap-3'>
+                {' '}
+                <img
+                  src={row?.getValue('image')}
+                  width={50}
+                  height={50}
+                  className='rounded-full'
+                ></img>
+                {row?.getValue('name')}
               </div>
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={{
-                  title: {
-                    text: 'Price chart',
-                  },
-
-                  accessibility: {
-                    point: {
-                      valueDescriptionFormat: '{separator}{value}$',
-                    },
-                  },
-
-                  xAxis: {
-                    title: {
-                      text: 'Year',
-                    },
-                    categories: [...(Xaxis || [])],
-                  },
-                  yAxis: {
-                    type: 'logarithmic',
-                    title: {
-                      text: 'Number of Internet Users (in millions)',
-                    },
-                  },
-
-                  tooltip: {
-                    headerFormat: '<b>Price</b><br />',
-                    pointFormat: '{point.y}$',
-                  },
-
-                  series: [
-                    {
-                      name: 'Internet Users',
-                      keys: ['y', 'color'],
-                      data: [],
-                      color: {
-                        linearGradient: {
-                          x1: 0,
-                          x2: 0,
-                          y1: 1,
-                          y2: 0,
-                        },
-                        stops: [
-                          [0, 'black'],
-                          [1, 'clack'],
-                        ],
+            </DialogTitle>
+            <DialogDescription>
+              <div className='mt-3'>
+                {' '}
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    chart: {
+                      type: 'line',
+                      backgroundColor: '#000',
+                      style: {
+                        color: 'white',
                       },
                     },
-                  ],
-                }}
-              />
+                    title: {
+                      text: 'Price chart',
+                    },
+
+                    accessibility: {
+                      point: {
+                        valueDescriptionFormat: '{separator}{value}$',
+                      },
+                    },
+
+                    xAxis: {
+                      title: {
+                        text: 'Year',
+                      },
+                      categories: [...(Xaxis || [])],
+                    },
+                    yAxis: {
+                      type: 'logarithmic',
+                      title: {
+                        text: '',
+                      },
+                    },
+
+                    tooltip: {
+                      headerFormat: '<b>Price</b><br />',
+                      pointFormat: '{point.y}$',
+                    },
+
+                    series: [
+                      {
+                        name: 'Internet Users',
+                        keys: ['y', 'color'],
+                        data: dataChart,
+                        color: '#fff',
+                      },
+                    ],
+                  }}
+                />
+              </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
