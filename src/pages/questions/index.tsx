@@ -1,33 +1,34 @@
 import { Layout } from '@/components/custom/layout'
-import ThemeSwitch from '@/components/theme-switch'
-import { UserNav } from '@/components/user-nav'
-import { HTTPResponse } from '@/lib/utils'
 import { useLoaderData } from 'react-router-dom'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { Question } from './data/schema'
 
 export default function Questions() {
-  const data = useLoaderData() as HTTPResponse<Question[]>
+  const data = useLoaderData() as any
+
+  console.log('data', data)
 
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
-      <Layout.Header sticky>
-        <div className='ml-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <UserNav />
-        </div>
-      </Layout.Header>
+      <Layout.Header sticky></Layout.Header>
 
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Questions</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>
+              OSOL 100 AI LIST
+            </h2>
+            <h2 className='text-2xl font-bold tracking-tight'>
+              Make with ❤️ OBOT & OSOL100 by Oxyz
+            </h2>
+            <h2 className='text-2xl font-bold tracking-tight'>
+              Cryptocurrency Prices
+            </h2>
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={data.data} columns={columns} />
+          <DataTable data={data} columns={columns} />
         </div>
       </Layout.Body>
     </Layout>

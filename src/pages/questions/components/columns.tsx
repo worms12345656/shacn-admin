@@ -2,9 +2,9 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
 
-import { categories, levels } from '../data/data'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { formatToMillionUSD } from '@/lib/utils'
 import { Question } from '../data/schema'
 
 export const columns: ColumnDef<Question>[] = [
@@ -32,17 +32,17 @@ export const columns: ColumnDef<Question>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: 'id',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Question' />
-    ),
-    cell: ({ row }) => (
-      <div className='w-[80px] truncate'>{row.getValue('id')}</div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   accessorKey: 'id',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title='Question' />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className='w-[80px] truncate'>{row.getValue('id')}</div>
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: 'name',
     header: ({ column }) => (
@@ -51,31 +51,64 @@ export const columns: ColumnDef<Question>[] = [
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
-          <span className='max-w-32 cursor-pointer truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('name')}
+          <Avatar>
+            <AvatarImage src={row.getValue('image')} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div className='max-w-32 cursor-pointer truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            <p>{row.getValue('name')}</p>
+            <p>{(row.getValue('symbol') as string).toUpperCase()}</p>
+          </div>
+        </div>
+      )
+    },
+  },
+
+  {
+    accessorKey: 'current_price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Price' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex w-[100px] items-center'>
+          <span>{`$${row.getValue('current_price')} `}</span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: 'price_change_24h',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Price Change In 24h' />
+    ),
+    cell: ({ row }) => {
+      const data = row.getValue('price_change_24h')
+      return (
+        <div className='flex items-center'>
+          <span
+            className={`${(data as any) > 0 ? 'text-green-500' : 'text-red-500'}`}
+          >
+            {row.getValue('price_change_24h')}
           </span>
         </div>
       )
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
-    accessorKey: 'category',
+    accessorKey: 'market_cap',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Category' />
+      <DataTableColumnHeader column={column} title='Market Cap' />
     ),
     cell: ({ row }) => {
-      const category = categories.find(
-        (category) => category.value === row.getValue('category')
-      )
-
-      if (!category) {
-        return null
-      }
-
       return (
-        <div className='flex w-[100px] items-center'>
-          <span>{category.label}</span>
-        </div>
+        <div className='flex items-center'>{`${formatToMillionUSD(row.getValue('market_cap'))}`}</div>
       )
     },
     filterFn: (row, id, value) => {
@@ -83,34 +116,38 @@ export const columns: ColumnDef<Question>[] = [
     },
   },
   {
-    accessorKey: 'level',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Level' />
-    ),
-    cell: ({ row }) => {
-      const level = levels.find(
-        (level) => level.value === row.getValue('level')
-      )
-
-      if (!level) {
-        return null
-      }
-
-      return (
-        <div className='flex items-center'>
-          {level.icon && (
-            <level.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )}
-          <span>{level.label}</span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+    accessorKey: 'image',
+    header: ({}) => <></>,
+    cell: ({}) => {
+      return <></>
     },
   },
   {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    accessorKey: 'symbol',
+    header: ({}) => <></>,
+    cell: ({}) => {
+      return <></>
+    },
+  },
+  {
+    accessorKey: 'low_24h',
+    header: ({}) => <></>,
+    cell: ({}) => {
+      return <></>
+    },
+  },
+  {
+    accessorKey: 'high_24h',
+    header: ({}) => <></>,
+    cell: ({}) => {
+      return <></>
+    },
+  },
+  {
+    accessorKey: 'id',
+    header: ({}) => <></>,
+    cell: ({}) => {
+      return <></>
+    },
   },
 ]
