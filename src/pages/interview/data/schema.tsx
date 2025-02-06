@@ -6,14 +6,12 @@ export const resultSchema = z.object({
   candidateName: z.string().min(1, 'Name must not be empty!'),
   note: z.string(),
   isPass: z.boolean(),
-  category: z.array(
-    z.array(
-      z.object({
-        questionId: z.string(),
-        summary: z.string(),
-        rating: z.number(),
-      })
-    )
+  questionList: z.array(
+    z.object({
+      questionId: z.string(),
+      summary: z.string(),
+      rating: z.number(),
+    })
   ),
 })
 

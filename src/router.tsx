@@ -58,10 +58,10 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('./pages/interview')).default,
         }),
-        loader: async ({}) => {
-          const result = await fetch(host('/questions-list'))
-          return result
-        },
+        // loader: async ({}) => {
+        //   const result = await fetch(host('/questions-list'))
+        //   return result
+        // },
       },
       {
         path: 'questions',
@@ -105,10 +105,10 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/results/id')).default,
         }),
-        // loader: async () => {
-        //   const data = await fetch(host(`/results`))
-        //   return data
-        // },
+        loader: async ({ params }) => {
+          const data = await fetch(host(`/results/${params.id}`))
+          return data
+        },
       },
       {
         path: 'question-list',

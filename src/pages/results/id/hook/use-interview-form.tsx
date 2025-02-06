@@ -1,22 +1,16 @@
 import { toast } from '@/components/ui/use-toast'
-import { host } from '@/lib/utils'
+import { HTTPResponse, host } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { data } from '../data/data'
+// import { data } from '../data/data'
 import { questionList } from '../data/question-list'
 import { Result, resultSchema } from '../data/schema'
-
-type Category = {
-  categoryName: string
-  questionList: {
-    questionId: string
-    questionName: string
-    hint: string
-  }[]
-}
+import { useLoaderData } from 'react-router-dom'
+import { Category } from '@/services/result/schema'
 
 export default function useInterviewForm() {
+  const { data } = useLoaderData() as HTTPResponse<Category[]>
   const [categoryList, setCategoryList] = useState<Category[]>(data)
   const defaultValues = {
     candidateName: '',
@@ -30,6 +24,8 @@ export default function useInterviewForm() {
       }))
     ),
   }
+
+  console.log('data', data)
 
   const method = useForm<Result>({
     resolver: zodResolver(resultSchema),
@@ -66,22 +62,22 @@ export default function useInterviewForm() {
     }
   })
 
-  const onSelectQuestionList = (id: string) => {
-    const index = questionList.findIndex((item) => item.id === id)
-    if (index < 0) return
-    const category = questionList[index].categories
-    setValue(
-      'category',
-      category.map((item) =>
-        item.questionList.map((item) => ({
-          questionId: item.questionId,
-          summary: '',
-          rating: 0,
-        }))
-      )
-    )
-    setCategoryList(category)
-  }
+  // const onSelectQuestionList = (id: string) => {
+  //   const index = questionList.findIndex((item) => item.id === id)
+  //   if (index < 0) return
+  //   const category = questionList[index].categories
+  //   setValue(
+  //     'category',
+  //     category.map((item) =>
+  //       item.questionList.map((item) => ({
+  //         questionId: item.questionId,
+  //         summary: '',
+  //         rating: 0,
+  //       }))
+  //     )
+  //   )
+  //   setCategoryList(category)
+  // }
 
   console.log(categoryList)
 
@@ -92,6 +88,6 @@ export default function useInterviewForm() {
     register,
     setValue,
     onSubmit,
-    onSelectQuestionList,
+    // onSelectQuestionList,
   } as const
 }

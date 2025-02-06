@@ -18,3 +18,14 @@ export const resultSchema = z.object({
 })
 
 export type Result = z.infer<typeof resultSchema>
+
+export type Category = {
+  categoryName: string
+  questionList: {
+    questionId: string
+    questionName: string
+    hint: string
+    rating: number
+    summary: string
+  }[]
+}
