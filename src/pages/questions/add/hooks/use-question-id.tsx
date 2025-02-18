@@ -19,10 +19,17 @@ export default function useQuestionId() {
   const { control, register, setValue, handleSubmit, getValues } = method
 
   const onSubmit = handleSubmit(async (input) => {
-    const { data, status } = await saveQuestions({ input })
+    const { data, status } = await saveQuestions({
+      input: {
+        ...input,
+        id: '',
+      },
+    })
+
+    console.log(data._id)
 
     if (status === 201) {
-      navigate(`/questions/${data.data._id}`)
+      navigate(`/questions/${data._id}`)
       toast({
         title: '',
         description: 'Save Result Successfully!',

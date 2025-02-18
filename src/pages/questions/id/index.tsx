@@ -51,7 +51,7 @@ export default function QuestionId() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <Card className='p-4'>
+          <Card>
             <CardHeader>
               <CardTitle>{questionId}</CardTitle>
               <CardDescription></CardDescription>
@@ -119,7 +119,7 @@ export default function QuestionId() {
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Hint</p>
                 {isEdit ? (
-                  <Textarea {...register('hint')}></Textarea>
+                  <Textarea className='h-60' {...register('hint')}></Textarea>
                 ) : (
                   <div>
                     <p className='whitespace-pre-wrap'>{getValues('hint')}</p>

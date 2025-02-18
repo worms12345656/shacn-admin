@@ -8,7 +8,6 @@ import { useLoaderData } from 'react-router-dom'
 import { otherQuestionList } from '../data/question-list'
 import { Result, resultSchema } from '../data/schema'
 import { questionList } from '../../results/id/data/question-list'
-import { data } from '../data/data'
 import { categories } from '../../questions/id/data/label'
 import { groupQuestionList } from '@/lib/convert/groupQuestionList'
 
@@ -22,7 +21,7 @@ import { groupQuestionList } from '@/lib/convert/groupQuestionList'
 // }
 
 export default function useInterviewForm() {
-  // const { data } = useLoaderData() as HTTPResponse<QuestionList>
+  const { data } = useLoaderData() as HTTPResponse<QuestionList>
   const [questionList, setQuestionList] = useState(data.questionList)
   const defaultValues = {
     candidateName: '',
@@ -58,17 +57,23 @@ export default function useInterviewForm() {
   const onSubmit = handleSubmit(async (data) => {
     console.log('data', data)
 
-    // const result = await fetch(host('/results/save'), {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(data),
-    // })
-    // if (result.status === 200) {
-    //   toast({
-    //     title: '',
-    //     description: 'Save Result Successfully!',
-    //   })
-    // }
+    const result = await fetch(host('/results/save'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    if (result.status === 200) {
+      toast({
+        title: '',
+        description: 'Save Result Successfully!',
+      })
+    }
+    if (result.status === 400) {
+      toast({
+        title: '',
+        description: 'Wrong Input!',
+      })
+    }
   })
 
   const onSelectQuestionList = (id: string) => {

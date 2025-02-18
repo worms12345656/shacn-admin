@@ -5,10 +5,7 @@ export const getQuestionList = async () => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
-  return {
-    data: await result.json(),
-    status: result.status,
-  }
+  return await result.json()
 }
 
 // export const saveQuestions = async ({ input }: { input: Question }) => {

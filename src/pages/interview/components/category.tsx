@@ -27,11 +27,7 @@ type Props = {
   }[]
 }
 
-export default function Category({
-  categoryName,
-  questionList,
-  categoryIndex,
-}: Props) {
+export default function Category({ categoryName, questionList }: Props) {
   const { register } = useFormContext()
   return (
     <>
@@ -44,7 +40,7 @@ export default function Category({
             <AccordionContent>
               {questionList.map((question) => (
                 <Card
-                  key={`question_${question.questionId}`}
+                  key={`question_${question.index}`}
                   className='mb-4 last-of-type:mb-0'
                 >
                   <CardHeader>
