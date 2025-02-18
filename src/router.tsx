@@ -4,6 +4,7 @@ import GeneralError from './pages/errors/general-error'
 import MaintenanceError from './pages/errors/maintenance-error'
 import NotFoundError from './pages/errors/not-found-error'
 import UnauthorisedError from './pages/errors/unauthorised-error.tsx'
+import { getQuestionList } from './services/question-list/index.tsx'
 
 const router = createBrowserRouter([
   // Auth routes
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('./pages/interview')).default,
         }),
+        loader: async ({}) => {
+          const result = await fetch(host('/interview'))
+          return result
+        },
       },
       {
         index: true,
@@ -104,16 +109,20 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/results/id')).default,
         }),
-        // loader: async () => {
-        //   const data = await fetch(host(`/results`))
-        //   return data
-        // },
+        loader: async ({ params }) => {
+          const data = await fetch(host(`/results/${params.id}`))
+          return data
+        },
       },
       {
         path: 'question-list',
         lazy: async () => ({
           Component: (await import('@/pages/question-list')).default,
         }),
+        loader: async () => {
+          const data = await getQuestionList()
+          return data
+        },
       },
       {
         path: 'question-list/:id',

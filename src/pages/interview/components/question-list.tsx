@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
-import { questionList } from '../data/question-list'
+import { otherQuestionList } from '../data/question-list'
 
 type Props = {
   onSelectQuestionList: (id: string) => void
@@ -24,8 +24,8 @@ export default function QuestionList({ onSelectQuestionList }: Props) {
             <div className='rounded-md border'>
               <Table>
                 <TableBody>
-                  {questionList.length ? (
-                    questionList.map((list) => (
+                  {otherQuestionList.length ? (
+                    otherQuestionList.map((list) => (
                       <TableRow
                         onClick={() => onSelectQuestionList(list.id)}
                         key={list.id}
@@ -36,7 +36,7 @@ export default function QuestionList({ onSelectQuestionList }: Props) {
                   ) : (
                     <TableRow>
                       <TableCell
-                        colSpan={questionList.length}
+                        colSpan={otherQuestionList.length}
                         className='h-24 text-center'
                       >
                         No results.

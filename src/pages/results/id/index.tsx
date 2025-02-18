@@ -15,7 +15,7 @@ export default function ResultId() {
     method,
     categoryList,
     register,
-    onSelectQuestionList,
+    // onSelectQuestionList,
     onSubmit,
   } = useInterviewForm()
   return (

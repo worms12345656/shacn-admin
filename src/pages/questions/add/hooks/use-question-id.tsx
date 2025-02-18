@@ -1,8 +1,9 @@
 import { toast } from '@/components/ui/use-toast'
 import { saveQuestions } from '@/services/question'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { Question } from '../data/schema'
+import { Question, questionSchema } from '../data/schema'
 
 export default function useQuestionId() {
   const navigate = useNavigate()
@@ -13,14 +14,22 @@ export default function useQuestionId() {
       level: 'basic',
       hint: '',
     },
+    resolver: zodResolver(questionSchema),
   })
   const { control, register, setValue, handleSubmit, getValues } = method
 
   const onSubmit = handleSubmit(async (input) => {
-    const { data, status } = await saveQuestions({ input })
+    const { data, status } = await saveQuestions({
+      input: {
+        ...input,
+        id: '',
+      },
+    })
+
+    console.log(data._id)
 
     if (status === 201) {
-      navigate(`/questions/${data.data._id}`)
+      navigate(`/questions/${data._id}`)
       toast({
         title: '',
         description: 'Save Result Successfully!',

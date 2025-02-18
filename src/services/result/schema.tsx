@@ -6,13 +6,26 @@ export const resultSchema = z.object({
   candidateName: z.string().min(1, 'Name must not be empty!'),
   note: z.string(),
   isPass: z.boolean(),
-  questionList: z.array(
-    z.object({
-      questionId: z.string(),
-      summary: z.string(),
-      rating: z.number(),
-    })
+  category: z.array(
+    z.array(
+      z.object({
+        questionId: z.string(),
+        summary: z.string(),
+        rating: z.number(),
+      })
+    )
   ),
 })
 
 export type Result = z.infer<typeof resultSchema>
+
+export type Category = {
+  categoryName: string
+  questionList: {
+    questionId: string
+    questionName: string
+    hint: string
+    rating: number
+    summary: string
+  }[]
+}

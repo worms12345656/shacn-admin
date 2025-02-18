@@ -14,33 +14,33 @@ import {
 import { Input } from '@/components/ui/input'
 import { useFormContext } from 'react-hook-form'
 import Rating from './rating'
+import { convertLabelCategory } from '@/lib/convert/label'
 
 type Props = {
   categoryIndex: number
   categoryName: string
   questionList: {
+    index: number
     questionId: string
     questionName: string
     hint: string
   }[]
 }
 
-export default function Category({
-  categoryName,
-  questionList,
-  categoryIndex,
-}: Props) {
+export default function Category({ categoryName, questionList }: Props) {
   const { register } = useFormContext()
   return (
     <>
       <div className='rounded-md border'>
         <Accordion type='single' collapsible className='p-4'>
           <AccordionItem value='item-1'>
-            <AccordionTrigger>{categoryName}</AccordionTrigger>
+            <AccordionTrigger>
+              {convertLabelCategory(categoryName)}
+            </AccordionTrigger>
             <AccordionContent>
-              {questionList.map((question, index) => (
+              {questionList.map((question) => (
                 <Card
-                  key={`question_${question.questionId}`}
+                  key={`question_${question.index}`}
                   className='mb-4 last-of-type:mb-0'
                 >
                   <CardHeader>
@@ -52,7 +52,7 @@ export default function Category({
                         <AccordionTrigger>Hint: </AccordionTrigger>
                         <AccordionContent>
                           <p
-                            key={`hint_${question.questionId}_${index}`}
+                            key={`hint_${question.questionId}_${question.index}`}
                             className='whitespace-pre-line'
                           >
                             {question.hint}
@@ -68,20 +68,18 @@ export default function Category({
                         className=''
                         placeholder='Summary'
                         {...register(
-                          `category.${categoryIndex}.${index}.questionId`
+                          `questionList.${question.index}.questionId`
                         )}
                         value={question.questionId}
                       ></Input>
                       <Input
                         className='w-2/3'
                         placeholder='Summary'
-                        {...register(
-                          `category.${categoryIndex}.${index}.summary`
-                        )}
+                        {...register(`questionList.${question.index}.summary`)}
                       ></Input>
                       <div>
                         <Rating
-                          name={`category.${categoryIndex}.${index}.rating`}
+                          name={`questionList.${question.index}.rating`}
                         />
                       </div>
                     </div>
