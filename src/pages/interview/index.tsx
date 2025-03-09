@@ -16,6 +16,9 @@ export default function Interview() {
     control,
     method,
     categoryList,
+    unchosenList,
+    openDialog,
+    setOpenDialog,
     register,
     onSelectQuestionList,
     onSubmit,
@@ -43,7 +46,12 @@ export default function Interview() {
                 {...register('candidateName')}
               ></Input>
               <div className='flex items-center gap-2'>
-                <QuestionList onSelectQuestionList={onSelectQuestionList} />
+                <QuestionList
+                  onSelectQuestionList={onSelectQuestionList}
+                  unchosenList={unchosenList}
+                  openDialog={openDialog}
+                  setOpenDialog={setOpenDialog}
+                />
                 <Note />
                 <div className='flex flex-row overflow-hidden rounded-md'>
                   <Controller

@@ -33,7 +33,7 @@ export default function useQuestionId() {
   }
 
   const onBackButton = () => {
-    navigate('/questions')
+    navigate('/question-list')
   }
 
   return {

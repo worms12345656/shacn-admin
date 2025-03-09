@@ -4,30 +4,35 @@ import { QuestionList } from '@/services/question-list/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { useLoaderData } from 'react-router-dom'
+import {
+  useFetcher,
+  useLoaderData,
+  useNavigate,
+  useRevalidator,
+} from 'react-router-dom'
 import { otherQuestionList } from '../data/question-list'
 import { Result, resultSchema } from '../data/schema'
-import { questionList } from '../../results/id/data/question-list'
 import { categories } from '../../questions/id/data/label'
 import { groupQuestionList } from '@/lib/convert/groupQuestionList'
-
-// type Category = {
-//   categoryName: string
-//   questionList: {
-//     questionId: string
-//     questionName: string
-//     hint: string
-//   }[]
-// }
+import {
+  getQuestionListUnchosen,
+  postQuestionListOnchoose,
+} from '@/services/question-list'
+import { UnchosenList } from '@/services/question-list/type'
+import useCommonErrors from '@/hooks/use-common-errors'
 
 export default function useInterviewForm() {
-  const { data } = useLoaderData() as HTTPResponse<QuestionList>
-  const [questionList, setQuestionList] = useState(data.questionList)
+  const { revalidate } = useRevalidator()
+  const { data } = useLoaderData() as HTTPResponse<
+    QuestionList & { unchosenList: UnchosenList }
+  >
+
+  const [openDialog, setOpenDialog] = useState(false)
   const defaultValues = {
     candidateName: '',
     isPass: false,
     note: '',
-    questionList: questionList.map((item) => ({
+    questionList: data.questionList.map((item) => ({
       questionId: item.id,
       summary: '',
       rating: 0,
@@ -40,14 +45,9 @@ export default function useInterviewForm() {
     defaultValues,
   })
 
-  const {
-    control,
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = method
-  console.log('err', errors)
+  const unchosenList = data.unchosenList
+
+  const { control, register, setValue, handleSubmit } = method
 
   const {} = useFieldArray({
     control,
@@ -55,8 +55,6 @@ export default function useInterviewForm() {
   })
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('data', data)
-
     const result = await fetch(host('/results/save'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -76,24 +74,23 @@ export default function useInterviewForm() {
     }
   })
 
-  const onSelectQuestionList = (id: string) => {
-    const index = otherQuestionList.findIndex((item) => item.id === id)
-    if (index < 0) return
-    setValue(
-      'questionList',
-      questionList.map((item) => ({
-        questionId: item.id,
-        summary: '',
-        rating: 0,
-      }))
-    )
-    // setCategoryList(category)
+  const onSelectQuestionList = async (id: string) => {
+    const { status } = await postQuestionListOnchoose(id)
+    if (status === 204) {
+      revalidate()
+      setOpenDialog(false)
+    } else {
+      useCommonErrors(status)
+    }
   }
 
   return {
     method,
     control,
     categoryList,
+    unchosenList,
+    openDialog,
+    setOpenDialog,
     register,
     setValue,
     onSubmit,
