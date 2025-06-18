@@ -11,3 +11,11 @@ export const questionListSchema = z.object({
 })
 
 export type QuestionList = z.infer<typeof questionListSchema>
+
+export const questionListFormSchema = z.object({
+  name: z.string(),
+  level: z.string(),
+  questionList: z.array(z.string()),
+})
+
+export type QuestionListForm = z.infer<typeof questionListFormSchema>

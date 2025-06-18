@@ -15,3 +15,13 @@ export type HTTPResponse<T> = {
   status: string
   data: T
 }
+
+export function arrayToObject<T>(arr: T[]): { [key: number]: T } {
+  return arr.reduce(
+    (obj, item, index) => {
+      obj[index] = item
+      return obj
+    },
+    {} as { [key: number]: T }
+  )
+}

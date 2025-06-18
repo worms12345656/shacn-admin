@@ -24,10 +24,11 @@ import { levels } from '../data/label'
 import { useNavigate } from 'react-router-dom'
 
 type Props = {
-  onBackButton: () => void
+  onBackButton: () => void,
+  onNextButton: () => void
 }
 
-export default function InformationSection({ onBackButton }: Props) {
+export default function InformationSection({ onBackButton,onNextButton }: Props) {
   const { register, getValues, setValue } = useFormContext()
   const navigate = useNavigate()
   return (
@@ -51,8 +52,10 @@ export default function InformationSection({ onBackButton }: Props) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {levels.map((item) => (
-                <SelectItem value={item.value}>{item.label}</SelectItem>
+              {levels.map((item, index) => (
+                <SelectItem value={item.value} key={`level_${index}`}>
+                  {item.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -60,7 +63,7 @@ export default function InformationSection({ onBackButton }: Props) {
       </CardContent>
       <CardFooter>
         <div className='flex w-full justify-end gap-4'>
-          <Button>Next</Button>
+          <Button onClick={onNextButton}>Next</Button>
           <Button type='button' onClick={onBackButton}>
             Back
           </Button>

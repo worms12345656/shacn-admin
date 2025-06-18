@@ -23,10 +23,24 @@ import { categories, levels } from './data/label'
 import useQuestionId from './hooks/use-question-list'
 import { FormProvider } from 'react-hook-form'
 import InformationSection from './components/information'
+import { Breadcrumb, BreadcrumbItem } from '@/components/custom/breadcrumb'
+import { Slash } from 'lucide-react'
+import Stepper from '@/components/custom/stepper'
+import QuestionSection from './components/questions'
+import { STEP } from './data/constant'
 
 export default function QuestionAdd() {
-  const { onSubmit, register, onBackButton, getValues, setValue, method } =
-    useQuestionId()
+  const {
+    onSubmit,
+    register,
+    onBackButton,
+    getValues,
+    setValue,
+    onChangeStep,
+    currentStep,
+    method,
+    steps,
+  } = useQuestionId()
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -45,14 +59,23 @@ export default function QuestionAdd() {
             </h2>
           </div>
         </div>
+        <Stepper
+          step={currentStep}
+          steps={steps}
+          onChangeStep={onChangeStep}
+        ></Stepper>
         <form
-          className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'
+          className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row'
           onSubmit={onSubmit}
         >
           <FormProvider {...method}>
-            <InformationSection
-              onBackButton={onBackButton}
-            ></InformationSection>
+            {currentStep === 'Information' && (
+              <InformationSection
+                onBackButton={onBackButton}
+                onNextButton={() => onChangeStep(STEP.Questions)}
+              ></InformationSection>
+            )}
+            {currentStep === 'Questions' && <QuestionSection></QuestionSection>}
           </FormProvider>
         </form>
       </Layout.Body>
