@@ -1,3 +1,4 @@
+import { Question } from '@/pages/questions/data/schema'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -23,5 +24,22 @@ export function arrayToObject<T>(arr: T[]): { [key: number]: T } {
       return obj
     },
     {} as { [key: number]: T }
+  )
+}
+
+// Convert questionList to row selection
+export function questionListToRowSelection<T>(
+  arr: T[],
+  data: Question[]
+): { [key: number]: boolean } {
+  return arr.reduce(
+    (obj, item) => {
+      // find index of question in list
+      const index = data.findIndex((data) => data.id === item)
+      // assign value in row selection
+      obj[index] = true
+      return obj
+    },
+    {} as { [key: number]: boolean }
   )
 }

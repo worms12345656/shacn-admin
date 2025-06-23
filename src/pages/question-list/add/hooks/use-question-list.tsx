@@ -4,9 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { Question, questionSchema } from '../data/schema'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { defaultSteps } from '../data/constant'
 import { QuestionList, QuestionListForm } from '@/services/question-list/schema'
+import { z } from 'zod'
+import { questionListFormSchema } from '@/services/question-list/schema'
 
 export default function useQuestionList() {
   const navigate = useNavigate()
@@ -19,11 +21,20 @@ export default function useQuestionList() {
       level: 'basic',
       questionList: [],
     },
-    resolver: zodResolver(questionSchema),
+    resolver: zodResolver(questionListFormSchema),
   })
-  const { control, register, setValue, handleSubmit, getValues } = method
+  const {
+    control,
+    register,
+    setValue,
+    handleSubmit,
+    getValues,
+    watch,
+    formState,
+  } = method
 
   console.log('getValues', getValues())
+  console.log('getValues', formState.errors)
 
   const onSubmit = handleSubmit(async (input) => {
     // const { data, status } = await saveQuestions({
@@ -57,6 +68,48 @@ export default function useQuestionList() {
   const onChangeStep = (step: string) => {
     setCurrentStep(step)
   }
+
+  useEffect(() => {
+    console.log('run')
+    console.log(
+      questionListFormSchema.shape.questionList.safeParse(watch('questionList'))
+        .success
+    )
+
+    if (questionListFormSchema.shape.name.safeParse(watch('name')).success) {
+      steps[0] = {
+        children: 'Information',
+        completed: true,
+        step: 'Information',
+      }
+      setSteps(steps)
+    } else {
+      steps[0] = {
+        children: 'Information',
+        completed: false,
+        step: 'Information',
+      }
+      setSteps(steps)
+    }
+    if (
+      questionListFormSchema.shape.questionList.safeParse(watch('questionList'))
+        .success
+    ) {
+      steps[1] = {
+        children: 'Questions',
+        completed: true,
+        step: 'Questions',
+      }
+      setSteps(steps)
+    } else {
+      steps[1] = {
+        children: 'Questions',
+        completed: false,
+        step: 'Questions',
+      }
+      setSteps(steps)
+    }
+  }, [currentStep])
 
   return {
     method,

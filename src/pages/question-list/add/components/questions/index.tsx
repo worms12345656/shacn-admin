@@ -9,13 +9,22 @@ import { Question } from './data/schema'
 import { questions } from './data/question'
 import { Button } from '@/components/custom/button'
 
-export default function QuestionSection() {
+type Props = {
+  onBackButton: () => void
+  onNextButton: () => void
+}
+
+export default function QuestionSection({ onBackButton, onNextButton }: Props) {
   return (
     <div className=' flex-1 overflow-auto pt-2 lg:flex-row'>
       <DataTable data={questions} columns={columns} />
       <div className='flex flex-row-reverse gap-2 p-2'>
-        <Button type='button'>Back</Button>
-        <Button type='button'>Next</Button>
+        <Button type='button' onClick={onBackButton}>
+          Back
+        </Button>
+        <Button type='button' onClick={onNextButton}>
+          Next
+        </Button>
       </div>
     </div>
   )

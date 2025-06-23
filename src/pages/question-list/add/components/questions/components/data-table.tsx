@@ -27,7 +27,7 @@ import {
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
 import { useFormContext } from 'react-hook-form'
-import { arrayToObject } from '@/lib/utils'
+import { arrayToObject, questionListToRowSelection } from '@/lib/utils'
 import { QuestionList } from '@/services/question-list/schema'
 import { Question } from '../data/schema'
 
@@ -42,16 +42,11 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const { watch, setValue } = useFormContext()
   const [rowSelection, setRowSelection] = useState(
-    arrayToObject(watch('questionList'))
+    questionListToRowSelection(watch('questionList'), data as Question[])
   )
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
-
-  // const onRowSelection = () => {
-  //   console.log('done')
-  // }
-  console.log(rowSelection)
 
   useEffect(() => {
     if (Object.keys(rowSelection).length < 0) return
