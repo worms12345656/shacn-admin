@@ -27,9 +27,9 @@ const Stepper = ({ steps, step, onChangeStep }: StepperProps) => {
                 className={`rounded-sm ${item.step === step && 'bg-gray-200'}`}
               >
                 {item.completed ? (
-                  <CheckCircle className={`m-2  text-green-500`}></CheckCircle>
+                  <CheckCircle className={`m-2 text-green-500`}></CheckCircle>
                 ) : (
-                  <Circle className={`m-2  text-red-500`}></Circle>
+                  <Circle className={`m-2 text-red-500`}></Circle>
                 )}
               </span>
               {item.children}

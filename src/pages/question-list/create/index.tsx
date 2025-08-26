@@ -28,9 +28,8 @@ import { Slash } from 'lucide-react'
 import Stepper from '@/components/custom/stepper'
 import QuestionSection from './components/questions'
 import { STEP } from './data/constant'
-import ConfirmSection from './components/confirm'
 
-export default function QuestionAdd() {
+export default function QuestionListAdd() {
   const {
     onSubmit,
     register,
@@ -41,6 +40,8 @@ export default function QuestionAdd() {
     currentStep,
     method,
     steps,
+    errors,
+    questionsData,
   } = useQuestionId()
   return (
     <Layout>
@@ -78,15 +79,10 @@ export default function QuestionAdd() {
             )}
             {currentStep === STEP.Questions && (
               <QuestionSection
+                questionsData={questionsData}
                 onBackButton={() => onChangeStep(STEP.Information)}
-                onNextButton={() => onChangeStep(STEP.Confirm)}
-              ></QuestionSection>
-            )}
-            {currentStep === STEP.Confirm && (
-              <ConfirmSection
-                onBackButton={() => onChangeStep(STEP.Questions)}
                 onCreateButton={onSubmit}
-              ></ConfirmSection>
+              ></QuestionSection>
             )}
           </FormProvider>
         </form>

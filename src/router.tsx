@@ -8,6 +8,7 @@ import {
   getInterview,
   getQuestionList,
 } from './services/question-list/index.tsx'
+import { getQuestions } from './services/question/index.tsx'
 
 const router = createBrowserRouter([
   // Auth routes
@@ -73,8 +74,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/questions')).default,
         }),
         loader: async ({}) => {
-          const result = await fetch(host('/questions'))
-
+          const result = await getQuestions()
           return result
         },
       },
@@ -89,9 +89,9 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: 'questions/add',
+        path: 'questions/create',
         lazy: async () => ({
-          Component: (await import('@/pages/questions/add')).default,
+          Component: (await import('@/pages/questions/create')).default,
         }),
       },
       {
@@ -125,10 +125,15 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: 'question-list/add',
+        path: 'question-list/create',
         lazy: async () => ({
-          Component: (await import('@/pages/question-list/add')).default,
+          Component: (await import('@/pages/question-list/create')).default,
         }),
+        loader: async ({}) => {
+          const result = await fetch(host('/questions'))
+
+          return result
+        },
       },
       {
         path: 'question-list/:id',

@@ -24,13 +24,15 @@ import { levels } from '../data/label'
 import { useNavigate } from 'react-router-dom'
 
 type Props = {
-  onBackButton: () => void,
+  onBackButton: () => void
   onNextButton: () => void
 }
 
-export default function InformationSection({ onBackButton,onNextButton }: Props) {
-  const { register, getValues, setValue } = useFormContext()
-  const navigate = useNavigate()
+export default function InformationSection({
+  onBackButton,
+  onNextButton,
+}: Props) {
+  const { register, getValues, setValue, trigger } = useFormContext()
   return (
     <Card>
       <CardHeader>

@@ -7,7 +7,7 @@ export const questionListSchema = z.object({
   name: z.string(),
   questionNumber: z.number(),
   level: z.string(),
-  choosen: z.string(),
+  chosen: z.string(),
 })
 
 export type QuestionList = z.infer<typeof questionListSchema>

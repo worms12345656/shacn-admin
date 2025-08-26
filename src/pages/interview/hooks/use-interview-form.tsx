@@ -16,7 +16,7 @@ import { categories } from '../../questions/id/data/label'
 import { groupQuestionList } from '@/lib/convert/groupQuestionList'
 import {
   getQuestionListUnchosen,
-  postQuestionListOnchoose,
+  postQuestionListOnChoose,
 } from '@/services/question-list'
 import { UnchosenList } from '@/services/question-list/type'
 import useCommonErrors from '@/hooks/use-common-errors'
@@ -75,7 +75,7 @@ export default function useInterviewForm() {
   })
 
   const onSelectQuestionList = async (id: string) => {
-    const { status } = await postQuestionListOnchoose(id)
+    const { status } = await postQuestionListOnChoose(id)
     if (status === 204) {
       revalidate()
       setOpenDialog(false)

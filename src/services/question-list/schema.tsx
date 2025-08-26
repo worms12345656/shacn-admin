@@ -5,7 +5,6 @@ import { questionSchema } from '../question/schema'
 // IRL, you will have a schema for your data models.
 export const questionListSchema = z.object({
   name: z.string(),
-  questionNumber: z.number(),
   level: z.string(),
   questionList: z.array(questionSchema),
 })
@@ -13,9 +12,9 @@ export const questionListSchema = z.object({
 export type QuestionList = z.infer<typeof questionListSchema>
 
 export const questionListFormSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1, 'Require'),
   level: z.string(),
-  questionList: z.array(z.string()).min(1),
+  questionListId: z.array(z.string()).min(1),
 })
 
 export type QuestionListForm = z.infer<typeof questionListFormSchema>

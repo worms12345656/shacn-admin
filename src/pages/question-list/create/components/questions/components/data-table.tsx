@@ -40,9 +40,9 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const { watch, setValue } = useFormContext()
+  const { watch, setValue, trigger } = useFormContext()
   const [rowSelection, setRowSelection] = useState(
-    questionListToRowSelection(watch('questionList'), data as Question[])
+    questionListToRowSelection(watch('questionListId'), data as Question[])
   )
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -54,7 +54,8 @@ export function DataTable<TData, TValue>({
     Object.keys(rowSelection).map((index) => {
       array.push((data[Number(index)] as Question).id)
     })
-    setValue('questionList', array)
+    setValue('questionListId', array)
+    trigger('questionListId')
   }, [rowSelection])
 
   const table = useReactTable({

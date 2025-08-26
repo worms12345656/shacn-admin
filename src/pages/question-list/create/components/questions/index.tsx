@@ -11,19 +11,24 @@ import { Button } from '@/components/custom/button'
 
 type Props = {
   onBackButton: () => void
-  onNextButton: () => void
+  onCreateButton: () => void
+  questionsData: HTTPResponse<Question[]>
 }
 
-export default function QuestionSection({ onBackButton, onNextButton }: Props) {
+export default function QuestionSection({
+  onBackButton,
+  onCreateButton,
+  questionsData,
+}: Props) {
   return (
     <div className=' flex-1 overflow-auto pt-2 lg:flex-row'>
-      <DataTable data={questions} columns={columns} />
+      <DataTable data={questionsData.data} columns={columns} />
       <div className='flex flex-row-reverse gap-2 p-2'>
         <Button type='button' onClick={onBackButton}>
           Back
         </Button>
-        <Button type='button' onClick={onNextButton}>
-          Next
+        <Button type='button' onClick={onCreateButton}>
+          Create
         </Button>
       </div>
     </div>

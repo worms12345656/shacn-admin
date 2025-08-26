@@ -63,7 +63,7 @@ export function DataTableToolbar<TData>({
           size='sm'
           className='ml-auto hidden h-8 lg:flex'
           type='button'
-          onClick={() => navigate('/questions/add')}
+          onClick={() => navigate('/questions/create')}
         >
           <PlusIcon className='mr-2 h-4 w-4'></PlusIcon> Add
         </Button>

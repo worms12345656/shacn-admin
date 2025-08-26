@@ -1,5 +1,5 @@
 import { toast } from '@/components/ui/use-toast'
-import { saveQuestions } from '@/services/question'
+import { saveQuestion } from '@/services/question'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -19,7 +19,7 @@ export default function useQuestionId() {
   const { control, register, setValue, handleSubmit, getValues } = method
 
   const onSubmit = handleSubmit(async (input) => {
-    const { data, status } = await saveQuestions({
+    const { data, status } = await saveQuestion({
       input: {
         ...input,
         id: '',
