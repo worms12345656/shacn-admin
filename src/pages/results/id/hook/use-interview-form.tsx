@@ -5,62 +5,63 @@ import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 // import { data } from '../data/data'
 import { questionList } from '../data/question-list'
-import { Result, resultSchema } from '../data/schema'
+import { resultSchema } from '../data/schema'
 import { useLoaderData } from 'react-router-dom'
 import { Category } from '@/services/result/schema'
+import { ResponseResult, Result } from '@/services/result/type'
+import {
+  groupQuestionList,
+  groupQuestionListWithRating,
+} from '@/lib/convert/groupQuestionList'
 
 export default function useInterviewForm() {
-  const { data } = useLoaderData() as HTTPResponse<Category[]>
-  const [categoryList, setCategoryList] = useState<Category[]>(data)
-  const defaultValues = {
-    candidateName: '',
-    isPass: false,
-    note: '',
-    category: data.map((item) =>
-      item.questionList.map((item) => ({
-        questionId: item.questionId,
-        summary: '',
-        rating: 0,
-      }))
-    ),
-  }
+  const { data: result } = useLoaderData() as HTTPResponse<Result>
 
-  console.log('data', data)
+  const [categoryList, setCategoryList] = useState(
+    groupQuestionListWithRating(result.resultList)
+  )
+  // const defaultValues = {
+  //   candidateName: '',
+  //   isPass: false,
+  //   note: '',
+  //   category: data..map((item) =>
+  //     item.questionList.map((item) => ({
+  //       questionId: item.questionId,
+  //       summary: '',
+  //       rating: 0,
+  //     }))
+  //   ),
+  // }
 
-  const method = useForm<Result>({
-    resolver: zodResolver(resultSchema),
-    defaultValues,
-  })
+  // const {
+  //   control,
+  //   register,
+  //   setValue,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = method
+  // console.log('err', errors)
 
-  const {
-    control,
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = method
-  console.log('err', errors)
+  // const {} = useFieldArray({
+  //   control,
+  //   name: 'category',
+  // })
 
-  const {} = useFieldArray({
-    control,
-    name: 'category',
-  })
+  // const onSubmit = handleSubmit(async (data) => {
+  //   // console.log('data', data)
 
-  const onSubmit = handleSubmit(async (data) => {
-    // console.log('data', data)
-
-    const result = await fetch(host('/result/save'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-    if (result.status === 200) {
-      toast({
-        title: '',
-        description: 'Save Result Successfully!',
-      })
-    }
-  })
+  //   const result = await fetch(host('/result/save'), {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(data),
+  //   })
+  //   if (result.status === 200) {
+  //     toast({
+  //       title: '',
+  //       description: 'Save Result Successfully!',
+  //     })
+  //   }
+  // })
 
   // const onSelectQuestionList = (id: string) => {
   //   const index = questionList.findIndex((item) => item.id === id)
@@ -79,15 +80,9 @@ export default function useInterviewForm() {
   //   setCategoryList(category)
   // }
 
-  console.log(categoryList)
-
   return {
-    method,
-    control,
+    result,
     categoryList,
-    register,
-    setValue,
-    onSubmit,
     // onSelectQuestionList,
   } as const
 }

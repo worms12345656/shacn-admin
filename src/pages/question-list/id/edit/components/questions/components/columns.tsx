@@ -2,7 +2,6 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
 
 import { categories, levels } from '../data/data'
 import { Question } from '../data/schema'
@@ -35,7 +34,7 @@ export const columns: ColumnDef<Question>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Id' />
+      <DataTableColumnHeader column={column} title='Question' />
     ),
     cell: ({ row }) => (
       <div className='w-[80px] truncate'>{row.getValue('id')}</div>
@@ -108,9 +107,5 @@ export const columns: ColumnDef<Question>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]

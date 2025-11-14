@@ -1,6 +1,15 @@
-import { useNavigate } from 'react-router-dom'
+import {
+  ErrorResponse,
+  Navigate,
+  isRouteErrorResponse,
+  useNavigate,
+  useRouteError,
+} from 'react-router-dom'
 import { Button } from '@/components/custom/button'
 import { cn } from '@/lib/utils'
+import NotFoundError from './not-found'
+import MaintenanceError from './maintenance'
+import UnauthorizedError from './unauthorized'
 
 interface GeneralErrorProps extends React.HTMLAttributes<HTMLDivElement> {
   minimal?: boolean
@@ -11,6 +20,26 @@ export default function GeneralError({
   minimal = false,
 }: GeneralErrorProps) {
   const navigate = useNavigate()
+  const error = useRouteError() as ErrorResponse
+
+  if (error.status === 401) {
+    return <Navigate to={'sign-in'} />
+  }
+
+  if (isRouteErrorResponse(error)) {
+    if (error.status === 404) {
+      return <NotFoundError />
+    }
+
+    if (error.status === 503) {
+      return <MaintenanceError />
+    }
+
+    if (error.status === 418) {
+      return <div>🫖</div>
+    }
+  }
+
   return (
     <div className={cn('h-svh w-full', className)}>
       <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>

@@ -1,18 +1,10 @@
 import { ReactNode } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 type AuthRouterProps = {
   children: ReactNode
 }
 
 export default function AuthRouter({ children }: AuthRouterProps) {
-  // const { auth, setAuth } = useAuth()
-
-  // const navigate = useNavigate()
-  // useEffect(() => {
-  //   if (!auth.jwt) {
-  //     navigate('/sign-in', { replace: true })
-  //   }
-  // }, [auth, setAuth])
-
   return <>{children}</>
 }

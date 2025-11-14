@@ -11,61 +11,56 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { SignIn } from '@/services/auth'
+import { Auth, authSchema } from '@/services/auth/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
 import { HTMLAttributes, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { z } from 'zod'
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Please enter your email' })
-    .email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(1, {
-      message: 'Please enter your password',
-    })
-    .min(7, {
-      message: 'Password must be at least 7 characters long',
-    }),
-})
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { setAuth } = useAuth()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<Auth>({
+    resolver: zodResolver(authSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  const { handleSubmit, control } = form
+
+  const onSubmit = handleSubmit(async (input: Auth) => {
     setIsLoading(true)
+    console.log(input)
+    const data = await SignIn({
+      input,
+    })
     console.log(data)
+
     setAuth({
-      jwt: '123',
+      jwt: data.accessToken,
       name: 'Tung',
     })
+
+    sessionStorage.setItem('accessToken', data.accessToken)
 
     setTimeout(() => {
       navigate('/')
       setIsLoading(false)
     }, 3000)
-  }
+  })
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className='grid gap-2'>
             <FormField
               control={form.control}
@@ -81,7 +76,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               )}
             />
             <FormField
-              control={form.control}
+              control={control}
               name='password'
               render={({ field }) => (
                 <FormItem className='space-y-1'>

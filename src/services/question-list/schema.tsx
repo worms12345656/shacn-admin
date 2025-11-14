@@ -18,3 +18,12 @@ export const questionListFormSchema = z.object({
 })
 
 export type QuestionListForm = z.infer<typeof questionListFormSchema>
+
+export const questionListEditFormSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, 'Require'),
+  level: z.string(),
+  questionListId: z.array(z.string()).min(1),
+})
+
+export type QuestionListEditForm = z.infer<typeof questionListEditFormSchema>

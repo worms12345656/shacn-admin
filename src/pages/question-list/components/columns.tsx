@@ -35,7 +35,7 @@ export const columns: ColumnDef<QuestionList>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Question' />
+      <DataTableColumnHeader column={column} title='Id' />
     ),
     cell: ({ row }) => (
       <div className='w-[80px] truncate'>{row.getValue('id')}</div>

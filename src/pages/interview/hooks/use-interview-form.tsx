@@ -1,5 +1,4 @@
 import { toast } from '@/components/ui/use-toast'
-import { HTTPResponse, host } from '@/lib/utils'
 import { QuestionList } from '@/services/question-list/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
@@ -11,7 +10,6 @@ import {
   useRevalidator,
 } from 'react-router-dom'
 import { otherQuestionList } from '../data/question-list'
-import { Result, resultSchema } from '../data/schema'
 import { categories } from '../../questions/id/data/label'
 import { groupQuestionList } from '@/lib/convert/groupQuestionList'
 import {
@@ -20,32 +18,36 @@ import {
 } from '@/services/question-list'
 import { UnchosenList } from '@/services/question-list/type'
 import useCommonErrors from '@/hooks/use-common-errors'
+import { saveResult } from '@/services/result'
+import { Interview, interviewSchema } from '@/services/result/schema'
+import { DataResponse, HttpResponse } from '@/lib/api'
 
 export default function useInterviewForm() {
   const { revalidate } = useRevalidator()
-  const { data } = useLoaderData() as HTTPResponse<
+  const navigate = useNavigate()
+  const { data } = useLoaderData() as DataResponse<
     QuestionList & { unchosenList: UnchosenList }
   >
+
+  const { questionList, unchosenList } = data
 
   const [openDialog, setOpenDialog] = useState(false)
   const defaultValues = {
     candidateName: '',
     isPass: false,
     note: '',
-    questionList: data.questionList.map((item) => ({
+    questionList: questionList.map((item) => ({
       questionId: item.id,
       summary: '',
       rating: 0,
     })),
   }
-  const categoryList = groupQuestionList(data.questionList)
+  const categoryList = groupQuestionList(questionList)
 
-  const method = useForm<Result>({
-    resolver: zodResolver(resultSchema),
+  const method = useForm<Interview>({
+    resolver: zodResolver(interviewSchema),
     defaultValues,
   })
-
-  const unchosenList = data.unchosenList
 
   const { control, register, setValue, handleSubmit } = method
 
@@ -54,17 +56,14 @@ export default function useInterviewForm() {
     name: 'questionList',
   })
 
-  const onSubmit = handleSubmit(async (data) => {
-    const result = await fetch(host('/results/save'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
+  const onSubmit = handleSubmit(async (input) => {
+    const result = await saveResult({ input })
     if (result.status === 200) {
       toast({
         title: '',
         description: 'Save Result Successfully!',
       })
+      navigate(`/results/${result.data.id}`)
     }
     if (result.status === 400) {
       toast({

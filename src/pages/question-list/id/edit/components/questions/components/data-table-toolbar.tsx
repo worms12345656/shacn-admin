@@ -1,11 +1,12 @@
-import { Cross2Icon } from '@radix-ui/react-icons'
+import { Cross2Icon, PlusIcon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { results } from '../data/data'
+import { useNavigate } from 'react-router-dom'
+import { categories, levels } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 
 interface DataTableToolbarProps<TData> {
@@ -21,21 +22,26 @@ export function DataTableToolbar<TData>({
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
-          placeholder='Filter name...'
-          value={
-            (table.getColumn('candidateName')?.getFilterValue() as string) ?? ''
-          }
+          placeholder='Filter questions...'
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('candidateName')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('result') && (
+          {table.getColumn('category') && (
             <DataTableFacetedFilter
-              column={table.getColumn('result')}
-              title='Result'
-              options={results}
+              column={table.getColumn('category')}
+              title='Category'
+              options={categories}
+            />
+          )}
+          {table.getColumn('level') && (
+            <DataTableFacetedFilter
+              column={table.getColumn('level')}
+              title='Level'
+              options={levels}
             />
           )}
         </div>

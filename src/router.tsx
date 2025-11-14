@@ -1,14 +1,21 @@
-import { createBrowserRouter } from 'react-router-dom'
+import {
+  ErrorResponse,
+  Navigate,
+  createBrowserRouter,
+  redirect,
+} from 'react-router-dom'
 import { host } from './lib/utils.ts'
-import GeneralError from './pages/errors/general-error'
-import MaintenanceError from './pages/errors/maintenance-error'
-import NotFoundError from './pages/errors/not-found-error'
-import UnauthorisedError from './pages/errors/unauthorised-error.tsx'
+import GeneralError from './pages/errors/general.tsx'
+import MaintenanceError from './pages/errors/maintenance.tsx'
+import NotFoundError from './pages/errors/not-found.tsx'
+import UnauthorizedError from './pages/errors/unauthorized.tsx'
 import {
   getInterview,
   getQuestionList,
+  getQuestionListById,
 } from './services/question-list/index.tsx'
 import { getQuestions } from './services/question/index.tsx'
+import { getResultDetail } from './services/result/index.tsx'
 
 const router = createBrowserRouter([
   // Auth routes
@@ -110,7 +117,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/results/id')).default,
         }),
         loader: async ({ params }) => {
-          const data = await fetch(host(`/results/${params.id}`))
+          const data = await getResultDetail(params.id)
           return data
         },
       },
@@ -130,8 +137,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/question-list/create')).default,
         }),
         loader: async ({}) => {
-          const result = await fetch(host('/questions'))
-
+          const result = await getQuestions()
           return result
         },
       },
@@ -140,6 +146,30 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/question-list/id')).default,
         }),
+        loader: async ({ params }) => {
+          const result = await getQuestionListById(params.id)
+          return result
+        },
+      },
+      {
+        path: 'question-list/:id/edit',
+        lazy: async () => ({
+          Component: (await import('@/pages/question-list/id/edit')).default,
+        }),
+        loader: async ({ params }) => {
+          const questionListData = await getQuestionListById(params.id)
+          const questions = await getQuestions()
+          console.log('questionListData2', questionListData)
+          console.log('questions2', questions)
+
+          return {
+            data: {
+              questionListData: questionListData.data,
+              questions: questions.data,
+            },
+            status: 200,
+          }
+        },
       },
       {
         path: 'chats',
@@ -226,7 +256,7 @@ const router = createBrowserRouter([
   { path: '/500', Component: GeneralError },
   { path: '/404', Component: NotFoundError },
   { path: '/503', Component: MaintenanceError },
-  { path: '/401', Component: UnauthorisedError },
+  { path: '/401', Component: UnauthorizedError },
 
   // Fallback 404 route
   { path: '*', Component: NotFoundError },

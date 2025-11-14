@@ -13,10 +13,6 @@ export const categories = [
   },
 ]
 
-export const convertLabelCategory = (value: string) => {
-  return categories.find((category) => category.value === value)?.label
-}
-
 export const levels = [
   {
     label: 'Basic',

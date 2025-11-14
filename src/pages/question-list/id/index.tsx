@@ -10,14 +10,15 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { UserNav } from '@/components/user-nav'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Category from './components/category'
-import { questionList } from './data/data'
 import useQuestionId from './hooks/use-question-id'
+import { groupQuestionList } from '@/lib/convert/groupQuestionList'
+import { levels } from '../data/data'
 
 export default function QuestionId() {
   const { id } = useParams()
-  const { isEdit, onClickEdit, onClickSave, onBackButton } = useQuestionId()
+  const { questionListInfo, onBackButton } = useQuestionId()
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -43,41 +44,35 @@ export default function QuestionId() {
             <CardContent>
               <div className='flex w-full  flex-row items-center justify-between border-b pb-6'>
                 <p className='min-w-[180px]'>Name</p>
-                {isEdit ? (
-                  // <Input {...register('name')}></Input>
-                  <></>
-                ) : (
-                  <p>Tung</p>
-                )}
+                <p>{questionListInfo.name}</p>
               </div>
               <div className='flex w-full flex-row justify-between border-b py-6'>
                 <p className='min-w-[180px]'>Level</p>
-                {isEdit ? (
-                  // <Input {...register('level')}></Input>
-                  <></>
-                ) : (
-                  // <p>{getValues('level')}</p>
-                  <p>Basic</p>
-                )}
+                <p>
+                  {
+                    levels.find((item) => item.value === questionListInfo.level)
+                      ?.label
+                  }
+                </p>
               </div>
               <div className='flex flex-col gap-6 border-b py-6'>
                 <p>List</p>
-                {questionList.list.map((item, index) => (
-                  <Category
-                    categoryIndex={index}
-                    categoryName={item.categoryName}
-                    questionList={item.questionList}
-                  ></Category>
-                ))}
+                {groupQuestionList(questionListInfo.questionList).map(
+                  (item, index) => (
+                    <Category
+                      categoryIndex={index}
+                      categoryName={item.categoryName}
+                      questionList={item.questionList}
+                    ></Category>
+                  )
+                )}
               </div>
             </CardContent>
             <CardFooter>
               <div className='flex w-full justify-end gap-4'>
-                {isEdit ? (
-                  <Button onClick={onClickSave}>Save</Button>
-                ) : (
-                  <Button onClick={onClickEdit}>Edit</Button>
-                )}
+                <Button>
+                  <Link to={`/question-list/${id}/edit`}>Edit</Link>
+                </Button>
                 <Button>Delete</Button>
                 <Button onClick={onBackButton}>Back</Button>
               </div>

@@ -29,3 +29,18 @@ export type Category = {
     summary: string
   }[]
 }
+
+export const interviewSchema = z.object({
+  candidateName: z.string().min(1, 'Name must not be empty!'),
+  note: z.string(),
+  isPass: z.boolean(),
+  questionList: z.array(
+    z.object({
+      questionId: z.string(),
+      summary: z.string(),
+      rating: z.number(),
+    })
+  ),
+})
+
+export type Interview = z.infer<typeof interviewSchema>

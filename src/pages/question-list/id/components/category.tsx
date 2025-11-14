@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { convertLabelCategory } from '@/lib/convert/label'
 
 type Props = {
   categoryIndex: number
@@ -22,7 +23,9 @@ export default function Category({ categoryName, questionList }: Props) {
       <div className='rounded-md border'>
         <Accordion type='single' collapsible className='p-4'>
           <AccordionItem value='item-1'>
-            <AccordionTrigger>{categoryName}</AccordionTrigger>
+            <AccordionTrigger>
+              {convertLabelCategory(categoryName)}
+            </AccordionTrigger>
             <AccordionContent>
               {questionList.map((question, index) => (
                 <Card

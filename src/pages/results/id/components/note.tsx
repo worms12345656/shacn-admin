@@ -8,14 +8,18 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 
-export default function Note() {
+type Props = {
+  note: string
+}
+
+export default function Note({ note }: Props) {
   return (
     <Drawer>
       <DrawerTrigger className='btn-like'>Note</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerDescription>
-            <p>Good</p>
+            <p>{note || 'No Note'}</p>
           </DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>

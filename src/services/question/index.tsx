@@ -1,7 +1,8 @@
 import { host } from '@/lib/utils'
 import { Question } from './schema'
+import { ResponseQuestions } from './type'
 
-export const getQuestions = async () => {
+export const getQuestions = async (): Promise<ResponseQuestions> => {
   const result = await fetch(host(`/questions`))
   return await result.json()
 }

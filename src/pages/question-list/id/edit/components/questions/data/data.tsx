@@ -1,3 +1,9 @@
+import {
+  ArrowDownIcon,
+  ArrowRightIcon,
+  ArrowUpIcon,
+} from '@radix-ui/react-icons'
+
 export const categories = [
   {
     value: 'frontEnd',
@@ -13,21 +19,20 @@ export const categories = [
   },
 ]
 
-export const convertLabelCategory = (value: string) => {
-  return categories.find((category) => category.value === value)?.label
-}
-
 export const levels = [
   {
     label: 'Basic',
     value: 'basic',
+    icon: ArrowDownIcon,
   },
   {
     label: 'Medium',
     value: 'medium',
+    icon: ArrowRightIcon,
   },
   {
     label: 'Advance',
     value: 'advance',
+    icon: ArrowUpIcon,
   },
 ]

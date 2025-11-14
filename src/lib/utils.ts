@@ -12,11 +12,6 @@ export function host(url: string) {
   return API_BASE_URL + url
 }
 
-export type HTTPResponse<T> = {
-  status: string
-  data: T
-}
-
 export function arrayToObject<T>(arr: T[]): { [key: number]: T } {
   return arr.reduce(
     (obj, item, index) => {

@@ -13,39 +13,32 @@ import {
 } from '@/components/ui/card'
 import { useFormContext } from 'react-hook-form'
 import Rating from './rating'
+import { convertLabelCategory } from '@/lib/convert/label'
+import { questionResult } from '@/services/result/type'
 
 type Props = {
   categoryIndex: number
   categoryName: string
-  questionList: {
-    questionId: string
-    questionName: string
-    hint: string
-  }[]
+  questionList: questionResult[]
 }
 
-export default function Category({
-  categoryName,
-  questionList,
-  categoryIndex,
-}: Props) {
-  const { register } = useFormContext()
+export default function Category({ categoryName, questionList }: Props) {
   return (
     <>
       <div className='rounded-md border'>
         <Accordion type='single' collapsible className='p-4' data-state='open'>
           <AccordionItem value='item-1'>
             <AccordionTrigger data-state='open'>
-              {categoryName}
+              {convertLabelCategory(categoryName)}
             </AccordionTrigger>
             <AccordionContent data-state='open'>
               {questionList.map((question, index) => (
                 <Card
-                  key={`question_${question.questionId}`}
+                  key={`question_${question.id}`}
                   className='mb-4 last-of-type:mb-0'
                 >
                   <CardHeader>
-                    <CardTitle>{question.questionName}</CardTitle>
+                    <CardTitle>{question.name}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Accordion type='single' collapsible>
@@ -53,7 +46,7 @@ export default function Category({
                         <AccordionTrigger>Hint: </AccordionTrigger>
                         <AccordionContent>
                           <p
-                            key={`hint_${question.questionId}_${index}`}
+                            key={`hint_${question.hint}_${index}`}
                             className='whitespace-pre-line'
                           >
                             {question.hint}
@@ -66,7 +59,7 @@ export default function Category({
                     <div className='mb-2 flex w-full items-center justify-between'>
                       <p>Summary</p>
                       <div>
-                        <Rating rating={5} />
+                        <Rating rating={question.rating} />
                       </div>
                     </div>
                   </CardFooter>

@@ -14,8 +14,12 @@ import { TopNav } from '@/components/top-nav'
 import { UserNav } from '@/components/user-nav'
 import { RecentSales } from './components/recent-sales'
 import { Overview } from './components/overview'
+import { useAuth } from '@/components/session-provider'
 
 export default function Dashboard() {
+  const session = useAuth()
+  console.log(session)
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}

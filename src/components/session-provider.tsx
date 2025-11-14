@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 type User = {
   name: string
@@ -14,7 +15,7 @@ type SessionProviderState = {
   setAuth: (auth: User) => void
 }
 
-const initalState: SessionProviderState = {
+const initialState: SessionProviderState = {
   auth: {
     jwt: '',
     name: '',
@@ -22,15 +23,13 @@ const initalState: SessionProviderState = {
   setAuth: () => null,
 }
 
-const SessionProviderContext = createContext<SessionProviderState>(initalState)
+const SessionProviderContext = createContext<SessionProviderState>(initialState)
 
 export function SessionProvider({ children, ...props }: SessionProviderProps) {
-  const [auth, setAuth] = useState<User>(initalState.auth)
+  const [auth, setAuth] = useState<User>(initialState.auth)
   const value = {
     auth,
     setAuth: (auth: User) => {
-      console.log('ancd')
-
       setAuth(auth)
     },
   }

@@ -1,8 +1,13 @@
+import { HTTPResponse } from '@/lib/utils'
+import { QuestionList } from '@/services/question-list/schema'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 
 export default function useQuestionId() {
-  // const data = useLoaderData() as HTTPResponse<Question>
+  const data = useLoaderData() as HTTPResponse<QuestionList>
+  const { data: questionListInfo } = data
+  console.log(questionListInfo)
+
   const [isEdit, setIsEdit] = useState(false)
   const navigate = useNavigate()
   // const method = useForm<Question>({
@@ -23,28 +28,17 @@ export default function useQuestionId() {
   //   // })
   // })
 
-  const onClickEdit = () => {
-    setIsEdit(true)
-  }
-
-  const onClickSave = () => {
-    setIsEdit(false)
-    // onSubmit()
-  }
-
   const onBackButton = () => {
     navigate('/question-list')
   }
 
   return {
     isEdit,
-    // method,
+    questionListInfo,
     // control,
     // register,
     // setValue,
     // onSubmit,
-    onClickEdit,
-    onClickSave,
     onBackButton,
     // getValues,
   } as const
