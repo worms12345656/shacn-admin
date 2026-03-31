@@ -10,13 +10,12 @@ export type QuestionList = {
   questionList: Question[]
 }
 
-export type ResponseQuestionList = {
-  data: {
+export type Interview = {
+  id: string
+  name: string
+  questionList: Question[]
+  unchosenList: {
     id: string
     name: string
-    level: string
-    questionListId: string[]
-    questionList: Question[]
-  }
-  status: number
+  }[]
 }

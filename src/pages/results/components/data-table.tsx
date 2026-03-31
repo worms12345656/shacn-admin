@@ -23,10 +23,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { useNavigate } from 'react-router-dom'
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
-import { Result } from '../data/schema'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -44,7 +42,6 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const navigate = useNavigate()
 
   const table = useReactTable({
     data,
@@ -97,9 +94,6 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  onClick={() => {
-                    navigate(`/results/${(row.original as Result).id}`)
-                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

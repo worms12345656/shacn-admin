@@ -5,7 +5,7 @@ type Props = {
 }
 
 export default function Rating({ name }: Props) {
-  const { register, control } = useFormContext()
+  const { control } = useFormContext()
   return (
     <>
       <RadioGroup className='flex w-1/3 flex-row items-center justify-between'>

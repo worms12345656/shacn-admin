@@ -11,10 +11,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useFormContext } from 'react-hook-form'
-import Rating from './rating'
 import { convertLabelCategory } from '@/lib/convert/label'
 import { questionResult } from '@/services/result/type'
+import Rating from './rating'
 
 type Props = {
   categoryIndex: number

@@ -1,14 +1,12 @@
 import { Layout } from '@/components/custom/layout'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { HTTPResponse } from '@/lib/utils'
-import { useLoaderData } from 'react-router-dom'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { Question } from './data/schema'
+import { useQuestion } from './hooks/use-question'
 
 export default function Questions() {
-  const data = useLoaderData() as HTTPResponse<Question[]>
+  const { questions } = useQuestion()
 
   return (
     <Layout>
@@ -27,7 +25,7 @@ export default function Questions() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={data.data} columns={columns} />
+          <DataTable data={questions} columns={columns} />
         </div>
       </Layout.Body>
     </Layout>

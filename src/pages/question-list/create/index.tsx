@@ -1,46 +1,21 @@
-import { Button } from '@/components/custom/button'
 import { Layout } from '@/components/custom/layout'
+import Stepper from '@/components/custom/stepper'
 import ThemeSwitch from '@/components/theme-switch'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { UserNav } from '@/components/user-nav'
-import { categories, levels } from './data/label'
-import useQuestionId from './hooks/use-question-list'
 import { FormProvider } from 'react-hook-form'
 import InformationSection from './components/information'
-import { Breadcrumb, BreadcrumbItem } from '@/components/custom/breadcrumb'
-import { Slash } from 'lucide-react'
-import Stepper from '@/components/custom/stepper'
 import QuestionSection from './components/questions'
 import { STEP } from './data/constant'
+import useQuestionId from './hooks/use-question-list'
 
 export default function QuestionListAdd() {
   const {
     onSubmit,
-    register,
     onBackButton,
-    getValues,
-    setValue,
     onChangeStep,
     currentStep,
     method,
     steps,
-    errors,
     questionsData,
   } = useQuestionId()
   return (

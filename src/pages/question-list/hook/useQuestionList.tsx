@@ -1,3 +1,4 @@
+import { copyQuestionList } from '@/services/question-list'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,6 +18,21 @@ export default function useQuestionList() {
     navigate('/question-list')
   }
 
+  const handleEdit = (id: string) => {
+    navigate(`/question-list/${id}/edit`)
+  }
+
+  const handleCopy = async (id: string) => {
+    try {
+      const { data } = await copyQuestionList(id)
+      if (data) {
+        navigate(`/question-list`)
+      }
+    } catch (error) {
+      console.error('Failed to copy question list:', error)
+    }
+  }
+
   return {
     isEdit,
     // method,
@@ -27,6 +43,8 @@ export default function useQuestionList() {
     onClickEdit,
     onClickSave,
     onBackButton,
+    handleEdit,
+    handleCopy,
     // getValues,
   } as const
 }

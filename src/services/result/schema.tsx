@@ -3,6 +3,7 @@ import { z } from 'zod'
 // We're keeping a simple non-relational schema here.
 // IRL, you will have a schema for your data models.
 export const resultSchema = z.object({
+  id: z.string(),
   candidateName: z.string().min(1, 'Name must not be empty!'),
   note: z.string(),
   isPass: z.boolean(),
@@ -44,3 +45,12 @@ export const interviewSchema = z.object({
 })
 
 export type Interview = z.infer<typeof interviewSchema>
+
+export const resultsSchema = z.object({
+  id: z.string(),
+  candidateName: z.string(),
+  point: z.number(),
+  result: z.string(),
+})
+
+export type Results = z.infer<typeof resultsSchema>

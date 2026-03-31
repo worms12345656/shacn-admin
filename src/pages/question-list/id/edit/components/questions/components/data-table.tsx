@@ -1,7 +1,6 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  RowSelectionState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -24,11 +23,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { questionListToRowSelection } from '@/lib/utils'
+import { useFormContext } from 'react-hook-form'
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
-import { useFormContext } from 'react-hook-form'
-import { arrayToObject, questionListToRowSelection } from '@/lib/utils'
-import { QuestionList } from '@/services/question-list/schema'
 import { Question } from '../data/schema'
 
 interface DataTableProps<TData, TValue> {

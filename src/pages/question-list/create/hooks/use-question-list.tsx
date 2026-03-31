@@ -1,19 +1,19 @@
 import { toast } from '@/components/ui/use-toast'
-import { saveQuestion } from '@/services/question'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, useWatch } from 'react-hook-form'
-import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Question, questionSchema } from '../data/schema'
-import { useEffect, useMemo, useState } from 'react'
-import { defaultSteps } from '../data/constant'
-import { QuestionList, QuestionListForm } from '@/services/question-list/schema'
-import { effect, z } from 'zod'
-import { questionListFormSchema } from '@/services/question-list/schema'
+import { useArrayLoaderData } from '@/hooks/use-loader-data'
 import { saveQuestionList } from '@/services/question-list'
-import { HTTPResponse } from '@/lib/utils'
+import {
+  QuestionListForm,
+  questionListFormSchema,
+} from '@/services/question-list/schema'
+import { Question } from '@/services/question/schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMemo, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { defaultSteps } from '../data/constant'
 
 export default function useQuestionList() {
-  const questionsData = useLoaderData() as HTTPResponse<Question[]>
+  const questionsData = useArrayLoaderData<Question>()
 
   const navigate = useNavigate()
   const [steps, setSteps] = useState(defaultSteps)
@@ -43,11 +43,9 @@ export default function useQuestionList() {
   const { errors } = formState
 
   const onSubmit = handleSubmit(async (input) => {
-    const { data, status } = await saveQuestionList({
+    const { status } = await saveQuestionList({
       input,
     })
-
-    console.log(data._id)
 
     if (status === 201) {
       navigate(`/question-list`)

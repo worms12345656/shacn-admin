@@ -6,18 +6,20 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import useResults from '../hook/useResults'
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps<TData extends { id: string }> {
   row: Row<TData>
 }
 
-export function DataTableRowActions<
-  TData,
->({}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData extends { id: string }>({
+  row,
+}: DataTableRowActionsProps<TData>) {
+  const { handleEdit } = useResults()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,10 +32,9 @@ export function DataTableRowActions<
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => handleEdit(row.original.id)}>
+          Detail
+        </DropdownMenuItem>
         <DropdownMenuItem>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

@@ -10,9 +10,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { toast } from '@/components/ui/use-toast'
-import { host } from '@/lib/utils'
 import { useNavigate } from 'react-router-dom'
+import { useQuestion } from '../hooks/use-question'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -22,6 +21,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const navigate = useNavigate()
+  const { handleCopyQuestion, handleDeleteQuestion } = useQuestion()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,49 +42,13 @@ export function DataTableRowActions<TData>({
           Detail
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={async () => {
-            await fetch(host(`/questions/${row.getValue('id')}/copy`), {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-            }).then((res) => {
-              if (res.status === 201) {
-                navigate('/questions')
-                toast({
-                  title: '',
-                  description: 'Copy succesfully',
-                })
-              } else {
-                toast({
-                  title: '',
-                  description: "Something's wrong",
-                })
-              }
-            })
-          }}
+          onClick={() => handleCopyQuestion(row.getValue('id'))}
         >
           Make a copy
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={async () => {
-            await fetch(host(`/questions/${row.getValue('id')}/delete`), {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-            }).then((res) => {
-              if (res.status === 204) {
-                navigate('/questions')
-                toast({
-                  title: '',
-                  description: 'Delete Result Successfully!',
-                })
-              } else {
-                toast({
-                  title: '',
-                  description: "Something's wrong",
-                })
-              }
-            })
-          }}
+          onClick={() => handleDeleteQuestion(row.getValue('id'))}
         >
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

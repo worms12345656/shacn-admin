@@ -9,7 +9,6 @@ import { Button } from '@/components/custom/button'
 import { cn } from '@/lib/utils'
 import NotFoundError from './not-found'
 import MaintenanceError from './maintenance'
-import UnauthorizedError from './unauthorized'
 
 interface GeneralErrorProps extends React.HTMLAttributes<HTMLDivElement> {
   minimal?: boolean

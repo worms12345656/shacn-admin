@@ -1,23 +1,15 @@
-import { toast } from '@/components/ui/use-toast'
-import { HTTPResponse, host } from '@/lib/utils'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 // import { data } from '../data/data'
-import { questionList } from '../data/question-list'
-import { resultSchema } from '../data/schema'
-import { useLoaderData } from 'react-router-dom'
-import { Category } from '@/services/result/schema'
-import { ResponseResult, Result } from '@/services/result/type'
-import {
-  groupQuestionList,
-  groupQuestionListWithRating,
-} from '@/lib/convert/groupQuestionList'
+import { useData } from '@/hooks/use-loader-data'
+import { groupQuestionListWithRating } from '@/lib/convert/groupQuestionList'
+import { Result } from '@/services/result/type'
 
 export default function useInterviewForm() {
-  const { data: result } = useLoaderData() as HTTPResponse<Result>
+  const navigate = useNavigate()
+  const result = useData<Result>()
 
-  const [categoryList, setCategoryList] = useState(
+  const [categoryList] = useState(
     groupQuestionListWithRating(result.resultList)
   )
   // const defaultValues = {
@@ -80,9 +72,14 @@ export default function useInterviewForm() {
   //   setCategoryList(category)
   // }
 
+  const handleBack = () => {
+    navigate('/results')
+  }
+
   return {
     result,
     categoryList,
+    handleBack,
     // onSelectQuestionList,
   } as const
 }

@@ -1,11 +1,11 @@
 export const categories = [
   {
     value: 'frontEnd',
-    label: 'Front End',
+    label: 'FrontEnd',
   },
   {
     value: 'backEnd',
-    label: 'Back End',
+    label: 'BackEnd',
   },
   {
     value: 'database',

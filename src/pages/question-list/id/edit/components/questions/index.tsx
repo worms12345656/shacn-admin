@@ -1,15 +1,7 @@
-import { Layout } from '@/components/custom/layout'
-import ThemeSwitch from '@/components/theme-switch'
-import { UserNav } from '@/components/user-nav'
-import { HTTPResponse } from '@/lib/utils'
-import { useLoaderData } from 'react-router-dom'
+import { Button } from '@/components/custom/button'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
 import { Question } from './data/schema'
-import { questions } from './data/question'
-import { Button } from '@/components/custom/button'
-import { QuestionList } from '@/services/question-list/type'
-import { ResponseQuestions } from '@/services/question/type'
 
 type Props = {
   onBackButton: () => void

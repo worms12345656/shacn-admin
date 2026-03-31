@@ -10,14 +10,17 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import useQuestionList from '../hook/useQuestionList'
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps<TData extends { id: string }> {
   row: Row<TData>
 }
 
-export function DataTableRowActions<
-  TData,
->({}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData extends { id: string }>({
+  row,
+}: DataTableRowActionsProps<TData>) {
+  const { handleEdit, handleCopy } = useQuestionList()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,9 +33,13 @@ export function DataTableRowActions<
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleEdit(row.original.id)}>
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleCopy(row.original.id)}>
+          Make a copy
+        </DropdownMenuItem>
+        {/* <DropdownMenuItem>Favorite</DropdownMenuItem> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           Delete

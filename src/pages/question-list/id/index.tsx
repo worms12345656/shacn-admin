@@ -10,11 +10,11 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { UserNav } from '@/components/user-nav'
+import { groupQuestionList } from '@/lib/convert/groupQuestionList'
 import { Link, useParams } from 'react-router-dom'
+import { levels } from '../data/data'
 import Category from './components/category'
 import useQuestionId from './hooks/use-question-id'
-import { groupQuestionList } from '@/lib/convert/groupQuestionList'
-import { levels } from '../data/data'
 
 export default function QuestionId() {
   const { id } = useParams()

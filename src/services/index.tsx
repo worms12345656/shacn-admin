@@ -1,9 +1,9 @@
 import { HttpResponse } from '@/lib/api'
-import { host } from '@/lib/utils'
 
-export function transformResponse<T>(throwErr: boolean) {
+export function transformResponse<T>() {
+  // throwErr: boolean
   return async (res: Response): Promise<HttpResponse<T>> => {
-    const json = await res.json().catch((e) => {
+    const json = await res.json().catch(() => {
       return {}
     })
     if (!res.ok) {
@@ -17,11 +17,11 @@ export function transformResponse<T>(throwErr: boolean) {
 
 export async function authFetcher<T>(
   input: RequestInfo,
-  init?: RequestInit,
-  throwErr = false
+  init?: RequestInit
+  // throwErr = false
 ) {
   return await fetch(input, init)
-    .then(transformResponse<T>(throwErr))
+    .then(transformResponse<T>())
     .catch((err) => {
       throw err
     })

@@ -1,13 +1,11 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
-import { otherQuestionList } from '../data/question-list'
 import { UnchosenList } from '@/services/question-list/type'
 
 type Props = {
@@ -26,11 +24,11 @@ export default function QuestionList({
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger className='btn-like' onClick={() => setOpenDialog(true)}>
-        Question List
+        Other Lists
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className='pb-4'>Question List</DialogTitle>
+          <DialogTitle className='pb-4'>Other Lists</DialogTitle>
           <div className='rounded-md border'>
             <Table>
               <TableBody>

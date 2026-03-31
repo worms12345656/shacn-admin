@@ -1,6 +1,5 @@
-import { CheckCircle, Circle, Minus } from 'lucide-react'
+import { CheckCircle, Circle } from 'lucide-react'
 import { Fragment, ReactNode } from 'react'
-import { Line } from 'recharts'
 
 type StepperProps = {
   steps: {

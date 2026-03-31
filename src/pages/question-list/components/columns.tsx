@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
 import { levels } from '../data/data'
-import { QuestionList } from '../data/schema'
+import { QuestionList } from '@/services/question-list/schema'
 
 export const columns: ColumnDef<QuestionList>[] = [
   {

@@ -1,30 +1,31 @@
 import { toast } from '@/components/ui/use-toast'
-import { HTTPResponse, host } from '@/lib/utils'
+import { useData } from '@/hooks/use-loader-data'
+import { host } from '@/lib/utils'
+import { updateQuestion } from '@/services/question'
+import { Question } from '@/services/question/type'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
-import { Question } from '../data/schema'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function useQuestionId() {
   const { id: questionId } = useParams()
-  const data = useLoaderData() as HTTPResponse<Question>
+  const data = useData<Question>()
   const [isEdit, setIsEdit] = useState(false)
   const navigate = useNavigate()
   const method = useForm<Question>({
     defaultValues: {
-      name: data.data.name,
-      category: data.data.category,
-      level: data.data.level,
-      hint: data.data.hint,
+      id: questionId,
+      name: data.name,
+      category: data.category,
+      level: data.level,
+      hint: data.hint,
     },
   })
   const { control, register, setValue, handleSubmit, getValues } = method
 
-  const onSubmit = handleSubmit(async (data) => {
-    const result = await fetch(host(`/questions/${questionId}/update`), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+  const onSubmit = handleSubmit(async (input) => {
+    const result = await updateQuestion({
+      input,
     })
     if (result.status === 201) {
       toast({

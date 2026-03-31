@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useContext, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
 
 type User = {
   name: string

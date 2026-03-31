@@ -1,6 +1,4 @@
 import { Button } from '@/components/custom/button'
-import { Layout } from '@/components/custom/layout'
-import ThemeSwitch from '@/components/theme-switch'
 import {
   Card,
   CardContent,
@@ -17,11 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import { UserNav } from '@/components/user-nav'
-import { FormProvider, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import { levels } from '../data/label'
-import { useNavigate } from 'react-router-dom'
 
 type Props = {
   onBackButton: () => void
@@ -32,7 +27,7 @@ export default function InformationSection({
   onBackButton,
   onNextButton,
 }: Props) {
-  const { register, getValues, setValue, trigger } = useFormContext()
+  const { register, getValues, setValue } = useFormContext()
   return (
     <Card>
       <CardHeader>

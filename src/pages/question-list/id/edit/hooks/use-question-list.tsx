@@ -1,23 +1,17 @@
 import { toast } from '@/components/ui/use-toast'
-import { saveQuestion } from '@/services/question'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, useWatch } from 'react-hook-form'
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useMemo, useState } from 'react'
-import { defaultSteps } from '../data/constant'
+import { useData } from '@/hooks/use-loader-data'
+import { updateQuestionList } from '@/services/question-list'
 import {
   QuestionListEditForm,
-  QuestionListForm,
+  questionListFormSchema,
 } from '@/services/question-list/schema'
-import { effect, z } from 'zod'
-import { questionListFormSchema } from '@/services/question-list/schema'
-import { saveQuestionList, updateQuestionList } from '@/services/question-list'
-import { HTTPResponse } from '@/lib/utils'
-import {
-  QuestionList,
-  ResponseQuestionList,
-} from '@/services/question-list/type'
-import { Question, ResponseQuestions } from '@/services/question/type'
+import { QuestionList } from '@/services/question-list/type'
+import { Question } from '@/services/question/type'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMemo, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
+import { defaultSteps } from '../data/constant'
 
 type Props = {
   questionListData: QuestionList
@@ -26,8 +20,10 @@ type Props = {
 
 export default function useQuestionList() {
   const params = useParams()
-  const { data } = useLoaderData() as HTTPResponse<Props>
+  const data = useData<Props>()
   const { questionListData, questions } = data
+
+  console.log('data', data)
 
   const navigate = useNavigate()
   const [steps, setSteps] = useState(defaultSteps)

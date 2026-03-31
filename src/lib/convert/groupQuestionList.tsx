@@ -1,5 +1,5 @@
 import { Question } from '@/services/question/schema'
-import { Result, questionResult } from '@/services/result/type'
+import { questionResult } from '@/services/result/type'
 
 type Category = {
   categoryName: string

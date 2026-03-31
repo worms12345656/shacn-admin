@@ -5,9 +5,9 @@ import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
 import { results } from '../data/data'
-import { Result } from '../data/schema'
+import { Results } from '@/services/result/schema'
 
-export const columns: ColumnDef<Result>[] = [
+export const columns: ColumnDef<Results>[] = [
   {
     id: 'select',
     header: ({ table }) => (

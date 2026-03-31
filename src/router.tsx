@@ -1,10 +1,5 @@
-import {
-  ErrorResponse,
-  Navigate,
-  createBrowserRouter,
-  redirect,
-} from 'react-router-dom'
-import { host } from './lib/utils.ts'
+import { createBrowserRouter } from 'react-router-dom'
+import { HttpResponse } from './lib/api.ts'
 import GeneralError from './pages/errors/general.tsx'
 import MaintenanceError from './pages/errors/maintenance.tsx'
 import NotFoundError from './pages/errors/not-found.tsx'
@@ -14,9 +9,10 @@ import {
   getQuestionList,
   getQuestionListById,
 } from './services/question-list/index.tsx'
-import { getQuestions } from './services/question/index.tsx'
-import { getResultDetail } from './services/result/index.tsx'
-
+import { QuestionList } from './services/question-list/type.tsx'
+import { getQuestionById, getQuestions } from './services/question/index.tsx'
+import { Question } from './services/question/type.tsx'
+import { getResultDetail, getResults } from './services/result/index.tsx'
 const router = createBrowserRouter([
   // Auth routes
   {
@@ -70,8 +66,8 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('./pages/interview')).default,
         }),
-        loader: async ({}) => {
-          const data = await getInterview()
+        loader: async () => {
+          const { data } = await getInterview()
           return data
         },
       },
@@ -80,9 +76,9 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/questions')).default,
         }),
-        loader: async ({}) => {
-          const result = await getQuestions()
-          return result
+        loader: async () => {
+          const { data } = await getQuestions()
+          return data
         },
       },
       {
@@ -91,7 +87,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/questions/id')).default,
         }),
         loader: async ({ params }) => {
-          const data = await fetch(host(`/questions/${params.id}`))
+          const { data } = await getQuestionById(params.id)
           return data
         },
       },
@@ -107,7 +103,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/results')).default,
         }),
         loader: async () => {
-          const data = await fetch(host(`/results`))
+          const { data } = await getResults()
           return data
         },
       },
@@ -117,7 +113,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/results/id')).default,
         }),
         loader: async ({ params }) => {
-          const data = await getResultDetail(params.id)
+          const { data } = await getResultDetail(params.id)
           return data
         },
       },
@@ -127,7 +123,7 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/question-list')).default,
         }),
         loader: async () => {
-          const data = await getQuestionList()
+          const { data } = await getQuestionList()
           return data
         },
       },
@@ -136,9 +132,9 @@ const router = createBrowserRouter([
         lazy: async () => ({
           Component: (await import('@/pages/question-list/create')).default,
         }),
-        loader: async ({}) => {
-          const result = await getQuestions()
-          return result
+        loader: async () => {
+          const { data } = await getQuestions()
+          return data
         },
       },
       {
@@ -147,8 +143,8 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/question-list/id')).default,
         }),
         loader: async ({ params }) => {
-          const result = await getQuestionListById(params.id)
-          return result
+          const { data } = await getQuestionListById(params.id)
+          return data
         },
       },
       {
@@ -157,10 +153,11 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/question-list/id/edit')).default,
         }),
         loader: async ({ params }) => {
-          const questionListData = await getQuestionListById(params.id)
-          const questions = await getQuestions()
-          console.log('questionListData2', questionListData)
-          console.log('questions2', questions)
+          const { data } = await getQuestionListById(params.id)
+          const { data: questionsData } = await getQuestions()
+
+          const questionListData = data as HttpResponse<QuestionList>
+          const questions = questionsData as HttpResponse<Question[]>
 
           return {
             data: {

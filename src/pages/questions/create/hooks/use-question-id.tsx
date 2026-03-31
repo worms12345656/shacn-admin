@@ -26,10 +26,8 @@ export default function useQuestionId() {
       },
     })
 
-    console.log(data._id)
-
     if (status === 201) {
-      navigate(`/questions/${data._id}`)
+      navigate(`/questions/${data?.id}`)
       toast({
         title: '',
         description: 'Save Result Successfully!',

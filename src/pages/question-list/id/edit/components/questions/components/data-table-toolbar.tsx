@@ -1,11 +1,10 @@
-import { Cross2Icon, PlusIcon } from '@radix-ui/react-icons'
+import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { useNavigate } from 'react-router-dom'
 import { categories, levels } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 

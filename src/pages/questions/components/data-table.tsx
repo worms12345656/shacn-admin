@@ -23,7 +23,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { useNavigate } from 'react-router-dom'
 import { DataTablePagination } from '../components/data-table-pagination'
 import { DataTableToolbar } from '../components/data-table-toolbar'
 
@@ -43,7 +42,6 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const navigate = useNavigate()
 
   const table = useReactTable({
     data,

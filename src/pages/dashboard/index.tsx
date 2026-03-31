@@ -35,7 +35,7 @@ export default function Dashboard() {
       {/* ===== Main ===== */}
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
+          <h1 className='text-2xl font-bold'>Dashboard</h1>
           <div className='flex items-center space-x-2'>
             <Button>Download</Button>
           </div>
@@ -74,7 +74,7 @@ export default function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
+                  <div className='text-2xl font-bold'>$2</div>
                   <p className='text-xs text-muted-foreground'>
                     +20.1% from last month
                   </p>

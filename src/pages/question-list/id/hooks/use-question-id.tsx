@@ -1,14 +1,12 @@
-import { HTTPResponse } from '@/lib/utils'
+import { useData } from '@/hooks/use-loader-data'
 import { QuestionList } from '@/services/question-list/schema'
 import { useState } from 'react'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function useQuestionId() {
-  const data = useLoaderData() as HTTPResponse<QuestionList>
-  const { data: questionListInfo } = data
-  console.log(questionListInfo)
+  const questionListInfo = useData<QuestionList>()
 
-  const [isEdit, setIsEdit] = useState(false)
+  const [isEdit] = useState(false)
   const navigate = useNavigate()
   // const method = useForm<Question>({
   //   defaultValues: {
