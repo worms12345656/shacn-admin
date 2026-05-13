@@ -1,3 +1,6 @@
+import { Button } from '@/components/custom/button'
+import { useAuth } from '@/components/session-provider'
+import { cn } from '@/lib/utils'
 import {
   ErrorResponse,
   Navigate,
@@ -5,10 +8,8 @@ import {
   useNavigate,
   useRouteError,
 } from 'react-router-dom'
-import { Button } from '@/components/custom/button'
-import { cn } from '@/lib/utils'
-import NotFoundError from './not-found'
 import MaintenanceError from './maintenance'
+import NotFoundError from './not-found'
 
 interface GeneralErrorProps extends React.HTMLAttributes<HTMLDivElement> {
   minimal?: boolean
@@ -18,10 +19,17 @@ export default function GeneralError({
   className,
   minimal = false,
 }: GeneralErrorProps) {
+  const { auth } = useAuth()
+  console.log(auth, '222')
+
   const navigate = useNavigate()
   const error = useRouteError() as ErrorResponse
 
   if (error.status === 401) {
+    return <Navigate to={'sign-in'} />
+  }
+
+  if (error.status === 403) {
     return <Navigate to={'sign-in'} />
   }
 

@@ -37,3 +37,4 @@ export const authSchema = z.object({
 })
 
 export type Auth = z.infer<typeof authSchema>
+export type SignUpInput = z.infer<typeof signUpSchema>

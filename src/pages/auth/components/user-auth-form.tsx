@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 import { SignIn } from '@/services/auth'
 import { Auth, authSchema } from '@/services/auth/schema'
@@ -25,6 +26,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { setAuth } = useAuth()
+  const { toast } = useToast()
 
   const form = useForm<Auth>({
     resolver: zodResolver(authSchema),
@@ -38,23 +40,54 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const onSubmit = handleSubmit(async (input: Auth) => {
     setIsLoading(true)
-    console.log(input)
-    const data = await SignIn({
-      input,
-    })
-    console.log(data)
+    try {
+      const response = await SignIn({
+        input,
+      })
 
-    setAuth({
-      jwt: data.accessToken,
-      name: 'Tung',
-    })
+      const { data, err } = response
 
-    sessionStorage.setItem('accessToken', data.accessToken)
+      if (err) {
+        toast({
+          title: 'Error',
+          description: err?.errMessage || 'Failed to sign in',
+          variant: 'destructive',
+        })
+        setIsLoading(false)
+        return
+      }
 
-    setTimeout(() => {
-      navigate('/')
+      const accessToken =
+        ((data as Record<string, unknown>)?.accessToken as string) || ''
+      setAuth({
+        jwt: accessToken,
+        name: ((data as Record<string, unknown>)?.username as string) || '',
+        email: ((data as Record<string, unknown>)?.email as string) || '',
+        purpose: ((data as Record<string, unknown>)?.purpose as string) || '',
+      })
+
+      toast({
+        title: 'Success',
+        description: 'Signed in successfully',
+      })
+
+      setTimeout(() => {
+        navigate('/dashboard')
+        setIsLoading(false)
+      }, 1500)
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'An error occurred while signing in'
+      toast({
+        title: 'Error',
+        description: errorMessage,
+        variant: 'destructive',
+      })
+      console.error('Sign in error:', error)
       setIsLoading(false)
-    }, 3000)
+    }
   })
 
   return (

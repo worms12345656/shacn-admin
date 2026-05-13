@@ -1,8 +1,5 @@
-import { HTMLAttributes, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import { z } from 'zod'
+import { Button } from '@/components/custom/button'
+import { PasswordInput } from '@/components/custom/password-input'
 import {
   Form,
   FormControl,
@@ -12,38 +9,26 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/custom/button'
-import { PasswordInput } from '@/components/custom/password-input'
+import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
+import { SignUp } from '@/services/auth'
+import { signUpSchema } from '@/services/auth/schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { HTMLAttributes, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { z } from 'zod'
 
 interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {}
 
-const formSchema = z
-  .object({
-    email: z
-      .string()
-      .min(1, { message: 'Please enter your email' })
-      .email({ message: 'Invalid email address' }),
-    password: z
-      .string()
-      .min(1, {
-        message: 'Please enter your password',
-      })
-      .min(6, {
-        message: 'Password must be at least 6 characters long',
-      }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match.",
-    path: ['confirmPassword'],
-  })
-
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
+  const { toast } = useToast()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -51,19 +36,60 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-    console.log(data)
+  const { handleSubmit } = form
 
-    setTimeout(() => {
+  const onSubmit = handleSubmit(async (input: z.infer<typeof signUpSchema>) => {
+    setIsLoading(true)
+    try {
+      const response = await SignUp({
+        input: {
+          email: input.email,
+          password: input.password,
+          confirmPassword: input.confirmPassword,
+        },
+      })
+
+      const { err, status } = response
+
+      if (status === 400 || err) {
+        toast({
+          title: 'Error',
+          description: err?.errMessage || 'Failed to create account',
+          variant: 'destructive',
+        })
+        setIsLoading(false)
+        return
+      }
+
+      toast({
+        title: 'Success',
+        description: "Account created successfully. Let's set your role.",
+      })
+
+      setTimeout(() => {
+        navigate('/purpose')
+        setIsLoading(false)
+      }, 1500)
+    } catch (error: any) {
+      const errorMessage =
+        error?.errMessage ||
+        (error instanceof Error
+          ? error.message
+          : 'An error occurred while creating account')
+      toast({
+        title: 'Error',
+        description: errorMessage,
+        variant: 'destructive',
+      })
+      console.error('Sign up error:', error)
       setIsLoading(false)
-    }, 3000)
-  }
+    }
+  })
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className='grid gap-2'>
             <FormField
               control={form.control}

@@ -14,6 +14,14 @@ import { getQuestionById, getQuestions } from './services/question/index.tsx'
 import { Question } from './services/question/type.tsx'
 import { getResultDetail, getResults } from './services/result/index.tsx'
 const router = createBrowserRouter([
+  // Landing page - no sidebar
+  {
+    path: '/',
+    lazy: async () => ({
+      Component: (await import('./pages/main')).default,
+    }),
+  },
+
   // Auth routes
   {
     path: '/sign-in',
@@ -46,7 +54,21 @@ const router = createBrowserRouter([
     }),
   },
 
-  // Main routes
+  // App routes with sidebar
+  {
+    path: '/',
+    errorElement: <GeneralError />,
+    children: [
+      {
+        path: 'purpose',
+        lazy: async () => ({
+          Component: (await import('@/pages/purpose')).default,
+        }),
+      },
+    ],
+  },
+
+  // App routes with sidebar
   {
     path: '/',
     lazy: async () => {
@@ -56,7 +78,7 @@ const router = createBrowserRouter([
     errorElement: <GeneralError />,
     children: [
       {
-        index: true,
+        path: 'dashboard',
         lazy: async () => ({
           Component: (await import('./pages/dashboard')).default,
         }),
